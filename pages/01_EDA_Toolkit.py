@@ -17,9 +17,7 @@ with st.sidebar:
     st.page_link("Main.py", label="Home", icon="🏠")
     # These will work once you add the multipage files under /pages
     st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="📊")
-    st.page_link("pages/02_Forecasting_Studio.py", label="Forecasting Toolkit", icon="📈")
-    st.page_link("pages/03_DataOps_Toolkit.py", label="DataOps Toolkit", icon="🧰")
-
+    
     st.divider()
     st.markdown("**Contact**")
     st.markdown("- GitHub: [@liliam-mtz](https://github.com/)")
@@ -1291,4 +1289,5 @@ grp["MA"] = grp.groupby(split_col)[val_col].transform(lambda s: s.rolling(12).me
                 "- **YoY** requiere al menos un año de historial a la misma frecuencia.\n"
                 "- Para descomposición estacional: `statsmodels.tsa.seasonal_decompose` (opcional)."
             )
+
 
