@@ -130,7 +130,7 @@ with st.sidebar:
     st.page_link("Main.py", label="Home", icon="🏠")
     st.markdown("**Tools**")
     st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="📊")
-    #!st.page_link("pages/02_Forecasting_Studio.py", label="Forecasting Toolkit", icon="📈")
+    st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="📈")
     #!st.page_link("pages/03_DataOps_Toolkit.py", label="DataOps Toolkit", icon="🧰")
     #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
     #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
