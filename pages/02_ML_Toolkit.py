@@ -25,6 +25,32 @@ st.set_page_config(page_title="Machine Learning Toolkit", layout="wide")
 st.title("Machine Learning Toolkit")
 #st.caption("Teoría → Código → Mini-demo ejecutable. Basado en scikit-learn, pensado para aprender y reutilizar.")
 
+# ---------- SIDEBAR (always-visible contact + nav) ----------
+with st.sidebar:
+    st.markdown("### 👋 About me")
+    st.write(
+        "Data Scientist with a strong background in **forecasting**, **business intelligence**, and **ML-powered analytics**. "
+        "I specialize in building **end-to-end data products** — from data pipelines and predictive models in **Snowflake/SQL** "
+        "to polished **Streamlit apps** used daily by business teams. "
+        "Passionate about turning raw data into clear, actionable insights that support **strategic decision-making**."
+    )
+
+    st.divider()
+    st.page_link("Main.py", label="Home", icon="🏠")
+    st.markdown("**Tools**")
+    st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="📊")
+    st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="📈")
+    #!st.page_link("pages/03_DataOps_Toolkit.py", label="DataOps Toolkit", icon="🧰")
+    #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
+    #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
+
+    st.divider()
+    st.markdown("**Contact**")
+    st.markdown("- GitHub: [@liliam-mtz](https://github.com/liliammtz)")
+    st.markdown("- LinkedIn: [Liliam Martínez](https://www.linkedin.com/in/liliammtz/)")
+    st.markdown("- Email: [liliammtzfdz@gmail.com](mailto:liliammtzfdz@gmail.com)")
+
+
 seed = 42
 
 # Helpers
