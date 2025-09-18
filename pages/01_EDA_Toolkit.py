@@ -13,8 +13,8 @@ with st.sidebar:
     )
 
     st.divider()
-    st.markdown("**Tools**")
     st.page_link("Main.py", label="Home", icon="🏠")
+    st.markdown("**Tools**")
     # These will work once you add the multipage files under /pages
     st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="📊")
     

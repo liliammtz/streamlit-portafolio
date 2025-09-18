@@ -126,8 +126,8 @@ with st.sidebar:
         "Passionate about turning raw data into clear, actionable insights that support **strategic decision-making**."
     )
 
-    st.page_link("Main.py", label="Home", icon="🏠")
     st.divider()
+    st.page_link("Main.py", label="Home", icon="🏠")
     st.markdown("**Tools**")
     st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="📊")
     #!st.page_link("pages/02_Forecasting_Studio.py", label="Forecasting Toolkit", icon="📈")
