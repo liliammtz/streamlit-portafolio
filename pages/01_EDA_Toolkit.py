@@ -4,6 +4,7 @@ st.set_page_config(page_title="EDA", page_icon="📊", layout="wide")
 st.title("📊 EDA Toolkit")
 
 # ---------- SIDEBAR (always-visible contact + nav) ----------
+# ---------- SIDEBAR (always-visible contact + nav) ----------
 with st.sidebar:
     st.markdown("### 👋 About me")
     st.write(
@@ -18,7 +19,7 @@ with st.sidebar:
     st.markdown("**Tools**")
     st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="📊")
     st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="📈")
-    #!st.page_link("pages/03_DataOps_Toolkit.py", label="DataOps Toolkit", icon="🧰")
+    st.page_link("pages/03_MLOps_Toolkit.py", label="MLOps Toolkit", icon="🧰")
     #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
     #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
 

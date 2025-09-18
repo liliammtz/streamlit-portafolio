@@ -32,7 +32,7 @@ with st.sidebar:
     st.markdown("**Tools**")
     st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="📊")
     st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="📈")
-    #!st.page_link("pages/03_DataOps_Toolkit.py", label="DataOps Toolkit", icon="🧰")
+    st.page_link("pages/03_MLOps_Toolkit.py", label="MLOps Toolkit", icon="🧰")
     #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
     #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
 
@@ -41,6 +41,7 @@ with st.sidebar:
     st.markdown("- GitHub: [@liliam-mtz](https://github.com/liliammtz)")
     st.markdown("- LinkedIn: [Liliam Martínez](https://www.linkedin.com/in/liliammtz/)")
     st.markdown("- Email: [liliammtzfdz@gmail.com](mailto:liliammtzfdz@gmail.com)")
+
 
 
     

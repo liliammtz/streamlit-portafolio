@@ -40,7 +40,7 @@ with st.sidebar:
     st.markdown("**Tools**")
     st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="📊")
     st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="📈")
-    #!st.page_link("pages/03_DataOps_Toolkit.py", label="DataOps Toolkit", icon="🧰")
+    st.page_link("pages/03_MLOps_Toolkit.py", label="MLOps Toolkit", icon="🧰")
     #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
     #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
 
@@ -88,8 +88,7 @@ def download_bytes(content: bytes, filename: str, label: str):
 # =========================
 t0, t1, t2 = st.tabs([
     "Supervised Learning",
-    "Unsupervised Learning",
-    "MLOps Concepts"
+    "Unsupervised Learning"
 ])
 
 # ============================================================
@@ -328,61 +327,3 @@ H = nmf.components_
                 ax.set_xlabel("PC1"); ax.set_ylabel("PC2")
                 st.pyplot(fig)
 
-# ============================================================
-# 3) MLOps CONCEPTS
-# ============================================================
-with t2:
-    st.subheader("🏗️ MLOps Concepts (mínimos viables + código base)")
-    colML, colMR = st.columns([1.1, 1])
-
-    with colML:
-        st.markdown("""
-**Checklist de mínimo viable a producción**
-- **Versionado**: datos, código, modelos (nombres/fechas/hashes).  
-- **Trazabilidad**: métrica, semilla, particiones, hiperparámetros.  
-- **Artefactos**: `joblib`/`pickle` del **Pipeline** (incluye prepro + modelo).  
-- **Esquemas**: valida entrada/salida (pydantic) y tipos.  
-- **Inferencia**: función `predict(df)` pura, determinista.  
-- **Monitoreo**: latencia, errores, data drift (distribuciones, PSI), performance.  
-- **Reproducibilidad**: `random_state`, requirements bloqueados.  
-""")
-
-        st.code(
-                """# Guardar y cargar un Pipeline sklearn
-import joblib
-# joblib.dump(pipeline, "model.joblib")
-# pipe = joblib.load("model.joblib")
-# y_pred = pipe.predict(X_new)
-""", language="python")
-
-        st.code(
-                """# Esqueleto de función de inferencia (batch)
-import pandas as pd
-
-def predict_batch(pipe, df: pd.DataFrame) -> pd.Series:
-    # Validar columnas, tipos, nulos, etc. (pydantic opcional)
-    return pd.Series(pipe.predict(df), name="prediction")
-""", language="python")
-
-    with colMR:
-        st.markdown("### ▶️ Demo: Exportar artefacto")
-        run_export = st.toggle("Entrenar y exportar pipeline de ejemplo", value=False, key="run_export")
-        if run_export:
-            # pipeline mínimo con breast cancer
-            X, y = load_data_classification()
-            pre = ColumnTransformer([("num", StandardScaler(), X.columns.tolist())])
-            pipe = Pipeline([("pre", pre), ("model", LogisticRegression(max_iter=1000, class_weight="balanced", random_state=seed))])
-            pipe.fit(X, y)
-
-        st.markdown("---")
-        st.markdown("### Snippet: Grid de entrenamiento reproducible")
-        st.code(
-                """# Entrenamiento reproducible (plantilla)
-def train_eval(pipe, X, y, scoring, cv, seed=42):
-    np.random.seed(seed)
-    res = cross_validate(pipe, X, y, scoring=scoring, cv=cv, n_jobs=-1, return_train_score=True)
-    summary = {m: (res[f"test_{m}"].mean(), res[f"test_{m}"].std()) for m in scoring}
-    return summary
-""", language="python")
-
-#st.info("Sugerencia: duplica esta app y adapta los demos a tus datasets reales (por ejemplo, Snowflake → `session.table(...).to_pandas()`), manteniendo **pipelines** para evitar leakage y asegurar reproducibilidad.")
