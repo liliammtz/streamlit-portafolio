@@ -467,3 +467,8 @@ with t_tools:
     - 🔒 **Reproducibility**  
     Fix `random_state`, document dependencies, and lock `requirements.txt`.  
     """)
+
+st.link_button(
+    "📖 Learn more: MLOps Concepts (DataCamp)",
+    "https://app.datacamp.com/learn/courses/mlops-concepts"
+)
