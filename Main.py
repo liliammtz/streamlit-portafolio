@@ -9,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ---------- STYLES (you can tweak brand colors here) ----------
+# ---------- STYLES ----------
 PRIMARY = "#d46a92"   # acento rosa elegante
 BG_SOFT = "#ffffff"   # fondo limpio blanco
 CARD_BG = "#f8f0f4"   # fondo de tarjetas en rosa muy claro
@@ -126,10 +126,9 @@ with st.sidebar:
         "Passionate about turning raw data into clear, actionable insights that support **strategic decision-making**."
     )
 
+    st.page_link("Main.py", label="Home", icon="🏠")
     st.divider()
     st.markdown("**Tools**")
-    st.page_link("Main.py", label="Home", icon="🏠")
-    # These will work once you add the multipage files under /pages
     st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="📊")
     #!st.page_link("pages/02_Forecasting_Studio.py", label="Forecasting Toolkit", icon="📈")
     #!st.page_link("pages/03_DataOps_Toolkit.py", label="DataOps Toolkit", icon="🧰")
