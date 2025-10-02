@@ -132,6 +132,7 @@ with st.sidebar:
     st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="📊")
     st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="📈")
     st.page_link("pages/03_MLOps_Toolkit.py", label="MLOps Toolkit", icon="🧰")
+    st.page_link("pages/04_LLM_Toolkit.py", label="LLM Theory Toolkit", icon="🤖")
     #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
     #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
 
