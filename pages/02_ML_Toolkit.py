@@ -49,7 +49,10 @@ with st.sidebar:
     st.markdown("**Contact**")
     st.markdown("- GitHub: [@liliam-mtz](https://github.com/liliammtz)")
     st.markdown("- LinkedIn: [Liliam Martínez](https://www.linkedin.com/in/liliammtz/)")
-    st.markdown("- Email: [liliammtzfdz@gmail.com](mailto:liliammtzfdz@gmail.com)")st.info("work in progress")
+    st.markdown("- Email: [liliammtzfdz@gmail.com](mailto:liliammtzfdz@gmail.com)")
+    
+    
+st.info("work in progress")
 
 seed = 42
 
