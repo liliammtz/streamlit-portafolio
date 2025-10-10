@@ -89,7 +89,7 @@ def download_bytes(content: bytes, filename: str, label: str):
 # =========================
 # Tabs principales (mantengo estructura)
 # =========================
-t0, t1, t2 = st.tabs([
+t0, t1 = st.tabs([
     "Supervised Learning",
     "Unsupervised Learning"
 ])
