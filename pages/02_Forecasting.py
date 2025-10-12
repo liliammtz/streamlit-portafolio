@@ -34,7 +34,7 @@ with st.sidebar:
 st.title("⚙️ Forecasting Toolkit")
 st.caption("An interactive guide to learn from scratch what forecasting is and how to apply it using python.")
 
-tab_intro, tab_statistical, tab_deepl = st.tabs(['Introduction','Statistical', 'Deep Learning'])
+tab_intro, tab_statistical, tab_deepl, tab_automating = st.tabs(['Introduction','Statistical', 'Deep Learning', 'Automating'])
 
 with tab_intro:
     st.title("📈 Forecasting Toolkit: Introduction")
@@ -1017,4 +1017,168 @@ with tab_deepl:
 
     - Deep learning models are **fast to train with GPUs** and scale well with big data.  
     - However, they require more expertise for tuning and are often less interpretable than statistical models.  
+    """)
+
+with tab_automating:
+    # ------------------------
+    # AUTOMATING TIME SERIES FORECASTING
+    # ------------------------
+    st.header("⚙️ Automating Time Series Forecasting")
+
+    st.markdown("""
+    Building statistical or deep learning models for forecasting can be complex and time-consuming.  
+    Fortunately, the **data science community** and industry leaders have developed libraries that **automate much of the process**.  
+    These tools provide built-in methods for testing stationarity, selecting parameters, handling seasonality, and even performing cross-validation.  
+
+    ### 🔑 Popular Libraries
+    - [**pmdarima**](http://alkaline-ml.com/pmdarima/modules/classes.html) → Auto-ARIMA & SARIMA, statistical baseline.  
+    - [**Prophet**](https://facebook.github.io/prophet) → Built by Meta for **business forecasting at scale**.  
+    - [**NeuralProphet**](https://neuralprophet.com/html/index.html) → Hybrid between Prophet & deep learning.  
+    - [**PyTorch Forecasting**](https://pytorch-forecasting.readthedocs.io/en/stable) → State-of-the-art DL models like DeepAR, N-Beats, LSTM.  
+    """)
+
+    # ------------------------
+    # PMDARIMA
+    # ------------------------
+    st.subheader("📊 Pmdarima (Auto-ARIMA)")
+
+    st.markdown("""
+    - Python implementation of the **auto.arima** library from R.  
+    - Automates:
+    - **ADF test** (Augmented Dickey-Fuller) for stationarity.  
+    - Automatic selection of p, d, q, P, Q to minimize **AIC**.  
+    - Great for **first-time learners** since it comes with toy datasets.  
+    - Still community-maintained and widely used for statistical baselines.  
+    """)
+
+    # ------------------------
+    # PROPHET
+    # ------------------------
+    st.subheader("🔮 Prophet (Meta Open Source)")
+
+    st.markdown("""
+    - Designed at **Facebook** for **business forecasting at scale**.  
+    - Strengths:
+    - Handles **nonlinear trends**.  
+    - Supports **multiple seasonalities** (yearly, monthly, weekly, daily).  
+    - Incorporates **holiday effects**.  
+    - Robust to **outliers** and **missing data**.  
+
+    ### 🧮 General Additive Model
+    Prophet models a time series as:  
+
+    $$
+    y(t) = g(t) + s(t) + h(t) + \\varepsilon_t
+    $$
+
+    Where:
+    - $g(t)$ = **trend component** (long-term evolution).  
+    - $s(t)$ = **seasonal component** (repeated cycles).  
+    - $h(t)$ = **holiday effects** (irregular events like Black Friday).  
+    - $\\varepsilon_t$ = error term (white noise).  
+
+    👉 Unlike ARIMA, Prophet does **not rely on past values directly**. Instead, it fits additive functions to capture trends, seasonality, and holidays.
+    """)
+
+    st.markdown("""
+    ### ⚡ Seasonal Modeling with Fourier Series
+    To capture complex periodic effects (weekly, yearly, etc.), Prophet expands the seasonal term $s(t)$ using **Fourier series**:
+
+    $$
+    s(t) = \\sum_{n=1}^N \\left[a_n \\cos\\left(\\frac{2\\pi n t}{P}\\right) + b_n \\sin\\left(\\frac{2\\pi n t}{P}\\right)\\right]
+    $$
+
+    Where:
+    - $P$ = length of the seasonal cycle.  
+    - $N$ = number of Fourier terms controlling flexibility.  
+    """)
+
+    # ------------------------
+    # HYPERPARAMETER TUNING
+    # ------------------------
+    st.subheader("⚙️ Prophet Hyperparameter Tuning")
+
+    st.markdown("""
+    Prophet provides multiple tunable parameters. The most impactful are:  
+
+    - **`changepoint_prior_scale`**: Controls **trend flexibility**.  
+    - Too small → underfits (trend too smooth).  
+    - Too large → overfits (trend follows noise).  
+    - Typical range: `[0.001, 0.01, 0.1, 0.5]`.  
+
+    - **`seasonality_prior_scale`**: Controls flexibility of seasonal component.  
+    - Small → smoother seasonality.  
+    - Large → captures minor fluctuations.  
+    - Typical range: `[0.01, 0.1, 1.0, 10.0]`.  
+
+    - **`holidays_prior_scale`**: Controls flexibility of holiday effects.  
+    - Same ranges as above.  
+
+    - **`seasonality_mode`**:  
+    - `"additive"` (default): seasonal amplitude constant over time.  
+    - `"multiplicative"`: seasonal amplitude grows with trend.  
+
+    👉 Advanced users combine **cross-validation** + **hyperparameter tuning** for robust Prophet models.
+    """)
+
+    # ------------------------
+    # CROSS VALIDATION
+    # ------------------------
+    st.subheader("📏 Cross-Validation in Prophet")
+
+    st.markdown("""
+    Prophet includes a **rolling cross-validation** method to ensure forecast stability.  
+
+    - **Initial** → size of the training set.  
+    - **Period** → spacing between cutoff dates.  
+    - **Horizon** → forecast length.  
+
+    A stable model shows **consistent error metrics** (MAPE, RMSE) across multiple rolling windows.  
+    """)
+
+    # ------------------------
+    # NEURAL PROPHET
+    # ------------------------
+    st.subheader("🤖 NeuralProphet")
+
+    st.markdown("""
+    - Extension of Prophet with **hybrid modeling** (classical + neural networks).  
+    - Built with **PyTorch backend**, flexible for researchers.  
+    - Keeps Prophet-like API → smooth transition.  
+    - Supports:
+    - ARIMA-style lags.  
+    - Fourier terms for multiple seasonalities.  
+    - Neural layers for nonlinearity.  
+    """)
+
+    st.info("📖 See: *NeuralProphet: Explainable Forecasting at Scale* (https://arxiv.org/abs/2111.15397)")
+
+    # ------------------------
+    # PYTORCH FORECASTING
+    # ------------------------
+    st.subheader("🧠 PyTorch Forecasting")
+
+    st.markdown("""
+    - Facilitates **state-of-the-art DL models** for time series.  
+    - Includes architectures like:
+    - **DeepAR** (probabilistic forecasting).  
+    - **N-BEATS** (interpretable + high accuracy).  
+    - **LSTM/GRU** (recurrent models for sequences).  
+    - **Temporal Fusion Transformer (TFT)**.  
+    - Actively maintained by the community.  
+    - Best suited for **very large datasets** with **nonlinear dependencies**.  
+    """)
+
+    # ------------------------
+    # SUMMARY
+    # ------------------------
+    st.subheader("📌 Key Takeaways")
+
+    st.markdown("""
+    - Forecasting can be automated using libraries like **pmdarima, Prophet, NeuralProphet, and PyTorch Forecasting**.  
+    - **Prophet** (Meta) is the most widely adopted for **business applications** with seasonal patterns.  
+    - Prophet is based on a **general additive model**, not lagged regression like ARIMA.  
+    - It is robust to **outliers, missing values, and multiple seasonalities**.  
+    - Hyperparameter tuning and cross-validation are critical for optimal performance.  
+    - No single tool is universal → always compare with baselines (naive, ARIMA) and consider deep learning for large, complex datasets.  
     """)
