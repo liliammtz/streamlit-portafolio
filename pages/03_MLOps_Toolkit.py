@@ -16,6 +16,7 @@ with st.sidebar:
     st.page_link("Main.py", label="Home", icon="🏠")
     st.markdown("**Tools**")
     st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="📊")
+    st.page_link("pages/02_Forecasting.py", label="Forecasting Toolkit", icon="📈")
     st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="📈")
     st.page_link("pages/03_MLOps_Toolkit.py", label="MLOps Toolkit", icon="🧰")
     st.page_link("pages/04_LLM_Toolkit.py", label="LLM Theory Toolkit", icon="🤖")
@@ -27,6 +28,7 @@ with st.sidebar:
     st.markdown("- GitHub: [@liliam-mtz](https://github.com/liliammtz)")
     st.markdown("- LinkedIn: [Liliam Martínez](https://www.linkedin.com/in/liliammtz/)")
     st.markdown("- Email: [liliammtzfdz@gmail.com](mailto:liliammtzfdz@gmail.com)")
+    
 st.title("⚙️ MLOps Toolkit")
 st.caption("An interactive guide to learn from scratch what MLOps is, its phases, roles, and tools.")
 
