@@ -127,15 +127,26 @@ with st.sidebar:
     )
 
     st.divider()
+
     st.page_link("Main.py", label="Home", icon="🏠")
-    st.markdown("**Tools**")
-    st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="📊")
+
+    #!st.markdown("### 📊 Data Science")
+
+    st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="🔎")
     st.page_link("pages/02_Forecasting.py", label="Forecasting Toolkit", icon="📈")
-    st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="📈")
-    st.page_link("pages/03_MLOps_Toolkit.py", label="MLOps Toolkit", icon="🧰")
-    st.page_link("pages/04_LLM_Toolkit.py", label="LLM Theory Toolkit", icon="🤖")
-    #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
-    #!st.page_link("pages/04_Save_The_Bees.py", label="save", icon="🧰")
+
+    #!st.markdown("### 🤖 Machine Learning")
+
+    st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="🧠")
+    st.page_link("pages/04_LLM_Toolkit.py", label="LLM Toolkit", icon="🤖")
+
+    #!st.markdown("### ⚙️ AI Engineering")
+
+    st.page_link("pages/03_MLOps_Toolkit.py", label="MLOps Toolkit", icon="⚙️")
+
+    #!st.markdown("### 🛡️ AI Governance")
+
+    st.page_link("pages/05_Responsable_AI.py", label="Responsible AI Toolkit", icon="🛡️")
 
     st.divider()
     st.markdown("**Contact**")
@@ -187,7 +198,6 @@ with col2:
         unsafe_allow_html=True,
     )
 
-# ---------- SKILLS ----------
 # ---------- SKILLS ----------
 st.subheader("Skills snapshot")
 
