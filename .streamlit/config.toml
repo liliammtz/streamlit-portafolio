@@ -1,10 +1,10 @@
 [theme]
-# Tonos femeninos/profesionales (rosa + neutrales sobrios)
-primaryColor = "#d46a92"          # rosa elegante
-backgroundColor = "#ffffff"       # blanco limpio
-secondaryBackgroundColor = "#f8f0f4"  # rosa muy claro (suave)
-textColor = "#2c2c34"             # gris oscuro profesional
-font = "serif"                    # serif da un toque más editorial/profesional
+
+primaryColor = "#c97a9e"             # rosa dusty elegante (menos saturado)
+backgroundColor = "#ffffff"          # blanco limpio
+secondaryBackgroundColor = "#faf6f8" # rosa ultra suave
+textColor = "#2f2f35"                # gris oscuro suave
+font = "serif"
 
 [client]
 showSidebarNavigation = false

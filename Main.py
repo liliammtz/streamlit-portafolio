@@ -10,7 +10,7 @@ st.set_page_config(
 )
 
 # ---------- STYLES ----------
-PRIMARY = "#d46a92"   # acento rosa elegante
+PRIMARY = "#c97a9e"   # acento rosa elegante
 BG_SOFT = "#ffffff"   # fondo limpio blanco
 CARD_BG = "#f8f0f4"   # fondo de tarjetas en rosa muy claro
 TEXT_SOFT = "#5a5a66" # gris suave para texto secundario
