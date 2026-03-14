@@ -199,6 +199,7 @@ with col2:
     )
 
 # ---------- SKILLS ----------
+
 st.subheader("Skills snapshot")
 
 # Definir categorías
@@ -271,8 +272,12 @@ st.divider()
 st.subheader("Certifications")
 
 certs = {
-    "Neo4j – Graph Data Science Fundamentals":
-        "https://graphacademy.neo4j.com/c/db3edc28-e119-4bc7-aee1-c6621d97ff98/",
+    "Neo4j – Certified Professional":
+        "https://graphacademy.neo4j.com/c/bf6ffa2d-eb5d-46ad-a4b5-426ba5fcd022/",
+    "Snowflake – BUILD 2025 - 2026: Data Engineering Bootcamp":
+        "https://developerbadges.snowflake.com/9a786c79-c83b-41b7-ac02-5a556a300454#acc.fREOCm0c",
+    "Snowflake – BUILD 2025 - 2026: Gen AI Bootcamp":
+        "https://developerbadges.snowflake.com/1e9c2833-ff7b-43eb-9756-1714dba7e59a#acc.zJZHQEjM",
     "Snowflake – BUILD 2023 Builder Badge":
         "https://developerbadges.snowflake.com/0521f0c1-3709-4390-be0b-71dcb6503af7#acc.l91ICgm2",
     "Snowflake – BUILD 2023 LLM Bootcamp Badge":
