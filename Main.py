@@ -268,6 +268,7 @@ c3.page_link("pages/02_ML_Toolkit.py", label="Machine Learning", icon="🧠")
 c1.page_link("pages/04_LLM_Toolkit.py", label="LLM Applications", icon="🤖")
 c2.page_link("pages/03_MLOps_Toolkit.py", label="MLOps & Deployment", icon="⚙️")
 c3.page_link("pages/05_Responsable_AI.py", label="AI Safety and Ethics", icon="🛡️")
+c2.page_link("pages/07_APIs.py", label="APIs and Data Engineering", icon="🌐")
 
 #!st.markdown("""Designed to be reusable, structured, and adaptable to different business cases.""")
 
