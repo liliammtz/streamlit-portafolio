@@ -1,47 +1,24 @@
 import streamlit as st
 
 st.set_page_config(page_title="EDA", page_icon="📊", layout="wide")
-st.title("📊 EDA Toolkit")
 
-# ---------- SIDEBAR (always-visible contact + nav) ----------
-with st.sidebar:
-    st.markdown("### 👋 About me")
-    st.write(
-        "Data Scientist with a strong background in **forecasting**, **business intelligence**, and **ML-powered analytics**. "
-        "I specialize in building **end-to-end data products** — from data pipelines and predictive models in **Snowflake/SQL** "
-        "to polished **Streamlit apps** used daily by business teams. "
-        "Passionate about turning raw data into clear, actionable insights that support **strategic decision-making**."
-    )
+nav0, nav1, nav2, nav3, nav4, nav5, nav6, nav7 = st.columns([0.12,0.21,0.16,0.22,0.21,0.25,0.14, 0.1])
 
-    st.divider()
+nav0.page_link("Main.py", label="Home", icon="🏠")
+nav1.page_link("pages/01_EDA_Toolkit.py", label="Data Exploration", icon="🔎")
+nav2.page_link("pages/02_Forecasting.py", label="Forecasting", icon="📈")
+nav3.page_link("pages/02_ML_Toolkit.py", label="Machine Learning", icon="🧠")
+nav4.page_link("pages/04_LLM_Toolkit.py", label="LLM Applications", icon="🤖")
+nav5.page_link("pages/03_MLOps_Toolkit.py", label="MLOps & Deployment", icon="⚙️")
+nav6.page_link("pages/05_Responsable_AI.py", label="AI Safety", icon="🛡️")
+nav7.page_link("pages/07_APIs.py", label="APIs", icon="🌐")
+st.divider()
 
-    st.page_link("Main.py", label="Home", icon="🏠")
-
-    #!st.markdown("### 📊 Data Science")
-
-    st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="🔎")
-    st.page_link("pages/02_Forecasting.py", label="Forecasting Toolkit", icon="📈")
-
-    #!st.markdown("### 🤖 Machine Learning")
-
-    st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="🧠")
-    st.page_link("pages/04_LLM_Toolkit.py", label="LLM Toolkit", icon="🤖")
-
-    #!st.markdown("### ⚙️ AI Engineering")
-
-    st.page_link("pages/03_MLOps_Toolkit.py", label="MLOps Toolkit", icon="⚙️")
-
-    #!st.markdown("### 🛡️ AI Governance")
-
-    st.page_link("pages/05_Responsable_AI.py", label="Responsible AI Toolkit", icon="🛡️")
-
-    st.divider()
-    st.markdown("**Contact**")
-    st.markdown("- GitHub: [@liliam-mtz](https://github.com/liliammtz)")
-    st.markdown("- LinkedIn: [Liliam Martínez](https://www.linkedin.com/in/liliammtz/)")
-    st.markdown("- Email: [liliammtzfdz@gmail.com](mailto:liliammtzfdz@gmail.com)")
-
-
+st.title("📊 Exploratory Data Analysis Toolkit")
+#!st.markdown("**Contact**")
+#!st.markdown("- GitHub: [@liliam-mtz](https://github.com/liliammtz)")
+#!st.markdown("- LinkedIn: [Liliam Martínez](https://www.linkedin.com/in/liliammtz/)")
+#!st.markdown("- Email: [liliammtzfdz@gmail.com](mailto:liliammtzfdz@gmail.com)")
 
 
 # =========================
@@ -80,18 +57,18 @@ def sample_df(n=500, seed=42):
     df = pd.concat([df, df.iloc[[5]]], ignore_index=True)  # un duplicado
     return df
 
-uploaded = st.file_uploader("Sube CSV/Excel para analisis", type=["csv","xlsx"])
+uploaded = st.file_uploader("Upload CSV/Excel for analysis", type=["csv","xlsx"])
 if uploaded is not None:
     if uploaded.name.endswith(".csv"):
         df = pd.read_csv(uploaded)
     elif uploaded.name.endswith(".xslx"):
         df = pd.read_excel(uploaded)
     else:
-        st.warning("Solo estan permitidos archivos de CSV o XLSX")
+        st.warning("Only CSV or XLSX files are allowed")
 else:
     df = sample_df()
 
-st.write("**Vista previa**")
+st.write("**Preview**")
 st.dataframe(df.head())
 
 
@@ -106,36 +83,36 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
 # =========================
-# Tabs principales
+# Main tabs
 # =========================
 t0, t1, t3, t4, t5, t6 = st.tabs([
-    "📊 Calidad & estructura",
-    "📈 Univariado (Descriptivas)",
-    #"📦 Distribuciones (Skewness & Kurtosis)",
-    "🔗 Relaciones multivariadas",
-    "🚨 Outliers & Anomalías",
-    "🧩 Categóricas & Balance de clases",
-    "⏳ Series de tiempo"
+    "📊 Quality & structure",
+    "📈 Univariate (Descriptive)",
+    #"📦 Distributions (Skewness & Kurtosis)",
+    "🔗 Multivariate relationships",
+    "🚨 Outliers & Anomalies",
+    "🧩 Categoricals & Class Balance",
+    "⏳ Time series"
 ])
 
 # =========================
-# 📊 Calidad & estructura
+# 📊 Quality & structure
 # =========================
 with t0:
-    st.subheader("Información básica")
+    st.subheader("Basic information")
     c0, c1 = st.columns(2)
     c0.write(
         """
-        ### 🔎 Paso 1: Evaluar la calidad de los datos  
+        ### 🔎 Step 1: Evaluate data quality  
 
-        Antes de profundizar en el análisis, es fundamental revisar la **calidad del dataset**.  
-        Algunas preguntas clave que debemos responder son:  
+        Before diving deeper into the analysis, it is essential to review the **dataset quality**.  
+        Some key questions we should answer are:  
 
-        - 📏 **¿De qué tamaño es el dataset?** (filas y columnas)  
-        - 🧾 **¿Qué tipos de datos contiene?** (numéricos, categóricos, fechas, texto, etc.)  
-        - 🏷️ **¿Qué significan esas variables?** (interpretación de las columnas)  
-        - ♻️ **¿Existen valores duplicados o inconsistentes?**  
-        - ⚠️ **Hay valores faltantes (nulos) que debamos tratar?**  
+        - 📏 **What is the size of the dataset?** (rows and columns)  
+        - 🧾 **What types of data does it contain?** (numeric, categorical, dates, text, etc.)  
+        - 🏷️ **What do these variables mean?** (interpretation of the columns)  
+        - ♻️ **Are there duplicate or inconsistent values?**  
+        - ⚠️ **Are there missing (null) values that we need to handle?**  
         """
     )
 
@@ -146,27 +123,27 @@ with t0:
         
     with c1:
         sc1, sc2 = st.columns(2)
-        sc1.metric("Filas", df.shape[0])
-        sc1.code("""filas = df.shape[0]""", language="python")
-        sc2.metric("Columnas", df.shape[1])
-        sc2.code("""columnas = df.shape[1]""", language="python")
+        sc1.metric("Rows", df.shape[0])
+        sc1.code("""rows = df.shape[0]""", language="python")
+        sc2.metric("Columns", df.shape[1])
+        sc2.code("""columns = df.shape[1]""", language="python")
         
     
     st.divider()
     c0, c1 = st.columns(2)
-    c1.subheader("Tipos de datos")
+    c1.subheader("Data types")
     c1.write(
         """
-        En Python existen los siguientes tipos de datos:
+        In Python, the following data types exist:
 
-        - **Para texto:** `str`  
-        - **Para datos numéricos:** `int`, `float`, `complex`  
-        - **Para secuencias:** `list`, `tuple`, `range`  
-        - **Para mapping:** `dict`  
-        - **Para sets:** `set`, `frozenset`  
-        - **Para booleanos (True/False):** `bool`  
-        - **Para binarios:** `bytes`, `bytearray`, `memoryview`  
-        - **Para nulos:** `NoneType`
+        - **For text:** `str`  
+        - **For numeric data:** `int`, `float`, `complex`  
+        - **For sequences:** `list`, `tuple`, `range`  
+        - **For mapping:** `dict`  
+        - **For sets:** `set`, `frozenset`  
+        - **For booleans (True/False):** `bool`  
+        - **For binary:** `bytes`, `bytearray`, `memoryview`  
+        - **For nulls:** `NoneType`
         """
     )
 
@@ -174,22 +151,22 @@ with t0:
     c0.write(pd.DataFrame(df.dtypes, columns=["dtype"]))
     st.divider()
     c0, c1 = st.columns(2)
-    c0.subheader("Manejo de nulos")
+    c0.subheader("Handling missing values")
     c0.write(
         """
-        🔍 En un dataset es común encontrar valores nulos debido a la naturaleza de los datos 
-        o a limitaciones en la recolección de la información. Sin embargo, cuando la cantidad 
-        de valores faltantes es considerable, conviene aplicar técnicas de **imputación** para 
-        no perder información valiosa.  
+        🔍 In a dataset, it is common to find missing values due to the nature of the data 
+        or limitations in data collection. However, when the number of missing values 
+        is significant, it is advisable to apply **imputation techniques** to avoid 
+        losing valuable information.  
 
-        Algunas estrategias habituales incluyen:  
-        - 📊 **Media o mediana** (para variables numéricas).  
-        - 📈 **Valor más frecuente (moda)** (para variables categóricas).  
-        - 🔄 **Forward/Backward fill** (en series temporales).  
-        - 🤖 **Modelos predictivos** (kNN, regresiones, etc.).  
+        Some common strategies include:  
+        - 📊 **Mean or median** (for numeric variables).  
+        - 📈 **Most frequent value (mode)** (for categorical variables).  
+        - 🔄 **Forward/Backward fill** (in time series).  
+        - 🤖 **Predictive models** (kNN, regressions, etc.).  
 
-        La elección de la técnica depende tanto del tipo de variable como del contexto 
-        del análisis.
+        The choice of technique depends on both the type of variable and the context 
+        of the analysis.
         """
     )
     
@@ -197,41 +174,41 @@ with t0:
     nulos_total = df.isna().sum().sum()
     if nulos_total > 0:
         with c1:
-            st.warning(f"⚠️ Se encontraron {nulos_total} valores nulos.")
+            st.warning(f"⚠️ {nulos_total} missing values were found.")
             na = df.isna().sum().sort_values(ascending=False).to_frame("n_nulls")
             na["pct"] = (na["n_nulls"] / len(df)) * 100
             #!st.dataframe(na)
             fig_na = px.bar(
                 na.reset_index(),
                 x="index", y="n_nulls",
-                title="Nulos por columna",
-                labels={"index": "Columna", "n_nulls": "Número de nulos"}
+                title="Missing values by column",
+                labels={"index": "Column", "n_nulls": "Number of missing values"}
             )
             st.plotly_chart(fig_na, use_container_width=True)
     else:
         with c1:
-            st.success("✅ No se encontraron valores nulos.")
+            st.success("✅ No missing values were found.")
 
     st.divider()
     c0, c1 = st.columns(2)
-    c1.subheader("Registros duplicados")
+    c1.subheader("Duplicate records")
     c1.write(
         """
-        🔁 En muchos datasets pueden aparecer **filas duplicadas**, ya sea por errores en la 
-        captura de información, procesos de integración de datos o registros repetidos en 
-        distintas fuentes.  
+        🔁 In many datasets, **duplicate rows** may appear due to errors in 
+        data entry, data integration processes, or repeated records from 
+        different sources.  
 
-        La presencia de duplicados puede sesgar los resultados del análisis, ya que implica 
-        contar la misma información más de una vez.  
+        The presence of duplicates can bias analysis results, as it implies 
+        counting the same information more than once.  
 
-        Algunas estrategias comunes para tratarlos son:  
-        - ❌ **Eliminar duplicados exactos** (`drop_duplicates`).  
-        - 🔍 **Revisar duplicados parciales**, manteniendo solo la observación más reciente o 
-        más completa.  
-        - 📊 **Agrupar o consolidar registros** cuando representan la misma entidad.  
+        Some common strategies to handle them are:  
+        - ❌ **Remove exact duplicates** (`drop_duplicates`).  
+        - 🔍 **Review partial duplicates**, keeping only the most recent or 
+        most complete observation.  
+        - 📊 **Group or consolidate records** when they represent the same entity.  
 
-        El enfoque adecuado dependerá del contexto y de la importancia que tenga cada 
-        registro dentro del análisis.
+        The appropriate approach depends on the context and the importance 
+        of each record within the analysis.
         """
     )
 
@@ -239,15 +216,15 @@ with t0:
     c0.code("df.duplicated().sum()",language='python')
     if duplicados_total > 0:
         with c0:
-            st.warning(f"⚠️ Se encontraron {duplicados_total} registros duplicados.")
+            st.warning(f"⚠️ {duplicados_total} duplicate records were found.")
             st.dataframe(df[df.duplicated(keep=False)].sort_values(list(df.columns)))
     else:
         with c0:
-            st.success("✅ No se encontraron duplicados.")
+            st.success("✅ No duplicates were found.")
 
     st.info(
         """
-        ### 📚 Recursos útiles  
+        ### 📚 Useful resources  
 
         - [Python Data Types – W3Schools](https://www.w3schools.com/python/python_datatypes.asp)  
         - [Data Imputation: A Comprehensive Guide (Medium)](https://medium.com/@ajayverma23/data-imputation-a-comprehensive-guide-to-handling-missing-values-b5c7d11c3488)  
@@ -256,84 +233,84 @@ with t0:
     )
 
 # =========================
-# 📈 Univariado (Descriptivas)
+# 📈 Univariate (Descriptive)
 # =========================
 with t1:
     st.markdown(
         """
-        ### 📈 Análisis univariado  
-        El análisis univariado permite explorar cada variable de manera individual, 
-        entendiendo su **distribución**, **variabilidad** y posibles valores atípicos.  
-        Aquí se muestran estadísticas descriptivas y visualizaciones por tipo de dato.
+        ### 📈 Univariate analysis  
+        Univariate analysis allows exploring each variable individually, 
+        understanding its **distribution**, **variability**, and possible outliers.  
+        Here, descriptive statistics and visualizations by data type are shown.
         """
     )
 
-    # --- Estadísticas descriptivas ---
+    # --- Descriptive statistics ---
     num_cols = df.select_dtypes(include=np.number).columns.tolist()
     cat_cols = df.select_dtypes(include=["object", "category"]).columns.tolist()
 
-    st.subheader("📊 Estadísticas descriptivas")
+    st.subheader("📊 Descriptive statistics")
     c1, c2 = st.columns(2)
     if num_cols:
         with c1:
-            st.markdown("**Numéricas**")
+            st.markdown("**Numeric**")
             st.code("""df[num_cols].describe().T""",language='python')
             st.dataframe(df[num_cols].describe().T)
     if cat_cols:
         with c2:
-            st.markdown("**Categóricas**")
+            st.markdown("**Categorical**")
             st.code("""df[cat_cols].describe().T""",language='python')
             st.dataframe(df[cat_cols].describe().T)
-    # --- Numéricas (una sola gráfica combinada) ---
+    # --- Numeric (single combined chart) ---
     st.divider()
-    st.subheader("📈 Distribución de variables numéricas")
+    st.subheader("📈 Distribution of numeric variables")
     c1, c2 = st.columns([1.2, 1])
     
     with c1:
         st.write(
-            "Explora la distribución con **histograma** + **KDE** en una sola vista. "
-            "**Tip:** Activa escala log si hay colas largas."
+            "Explore the distribution with **histogram** + **KDE** in a single view. "
+            "**Tip:** Enable log scale if there are long tails."
         )
 
         if num_cols:
-            col_num = st.selectbox("Variable numérica", num_cols, key="num_univar")
+            col_num = st.selectbox("Numeric variable", num_cols, key="num_univar")
             bins = st.slider("Bins", 10, 100, 40, key="bins_univar")
-            use_log = st.toggle("Escala log en eje Y", value=False, key="log_univar")
+            use_log = st.toggle("Log scale on Y-axis", value=False, key="log_univar")
 
-            # Datos limpios
+            # Clean data
             serie = df[col_num].dropna().astype(float)
 
-            # Gráfica combinada: histograma + KDE (Figure Factory)
-            # Nota: ff.create_distplot ya combina histograma + curva KDE
+            # Combined chart: histogram + KDE (Figure Factory)
+            # Note: ff.create_distplot already combines histogram + KDE curve
             fig_dist = ff.create_distplot(
                 [serie.values], [col_num],
                 bin_size=(serie.max() - serie.min()) / bins if bins else None,
                 show_hist=True, show_rug=False
             )
 
-            # Líneas de referencia: media y mediana
+            # Reference lines: mean and median
             mean_v = float(serie.mean())
             median_v = float(serie.median())
             fig_dist.add_vline(x=mean_v, line_dash="dash", annotation_text=f"mean={mean_v:.2f}")
             #!fig_dist.add_vline(x=median_v, line_dash="dot", annotation_text=f"median={median_v:.2f}")
 
-            # Escala log opcional en Y
+            # Optional log scale on Y
             fig_dist.update_yaxes(type="log" if use_log else "linear")
 
-            fig_dist.update_layout(title=f"Histograma + KDE: {col_num}", showlegend=False)
+            fig_dist.update_layout(title=f"Histogram + KDE: {col_num}", showlegend=False)
             st.plotly_chart(fig_dist, use_container_width=True)
         else:
-            st.info("No hay columnas numéricas disponibles.")
+            st.info("No numeric columns available.")
 
     with c2:
         if num_cols:
-            # Estadísticos de apoyo (skew/kurtosis) para la variable seleccionada
+            # Supporting stats (skew/kurtosis) for selected variable
             sel = df[col_num].dropna().astype(float)
             skew_v = float(sel.skew())
             kurt_v = float(sel.kurt())
 
-            # Boxplot compacto para contexto (misma variable)
-            st.markdown("**Boxplot (resumen de dispersión)**")
+            # Compact boxplot for context (same variable)
+            st.markdown("**Boxplot (dispersion summary)**")
             box_fig = px.box(sel.to_frame(name=col_num), y=col_num)
             box_fig.update_layout(height=300, margin=dict(l=10, r=10, t=30, b=10))
             st.plotly_chart(box_fig, use_container_width=True)
@@ -344,26 +321,26 @@ with t1:
 
             st.markdown(
                 """
-                **Tips de interpretación**  
-                - **Skewness > 0**: cola a la derecha (pocos valores muy altos).  
-                - **Skewness < 0**: cola a la izquierda.  
-                - **Kurtosis** alta: colas pesadas (posibles outliers).  
-                - Considera **mediana/IQR** si hay sesgo; puedes probar **log** en Y.
+                **Interpretation tips**  
+                - **Skewness > 0**: right tail (few very high values).  
+                - **Skewness < 0**: left tail.  
+                - High **Kurtosis**: heavy tails (possible outliers).  
+                - Consider **median/IQR** if there is skewness; you can try **log** scaling on Y.
                 """
             )
 
     st.divider()
     
-    st.subheader("📊 Distribución de variables categóricas")
+    st.subheader("📊 Distribution of categorical variables")
          
     c1, c2 = st.columns(2) 
     with c2:    
-        # --- Categóricas ---
+        # --- Categorical ---
         if cat_cols:
             
             
-                col_cat = st.selectbox("Selecciona variable categórica", cat_cols)
-                top_n = st.slider("Mostrar Top N categorías", 5, 20, 10)
+                col_cat = st.selectbox("Select categorical variable", cat_cols)
+                top_n = st.slider("Show Top N categories", 5, 20, 10)
                 
                 counts = df[col_cat].value_counts(dropna=False).reset_index()
                 counts.columns = [col_cat, "count"]
@@ -374,8 +351,8 @@ with t1:
 
                 fig_bar = px.bar(
                     counts, x=col_cat, y="count",
-                    text="pct", title=f"Top {top_n} categorías: {col_cat}",
-                    labels={"count": "Frecuencia"},
+                    text="pct", title=f"Top {top_n} categories: {col_cat}",
+                    labels={"count": "Frequency"},
                     color_discrete_sequence=["#EF553B"]
                 )
                 fig_bar.update_traces(texttemplate="%{text:.1f}%", textposition="outside")
@@ -383,57 +360,56 @@ with t1:
 
 
 
-    st.subheader("🔢 Conteo de valores únicos")
-    st.dataframe(df.nunique(dropna=True).to_frame("Valores únicos"))
-
+    st.subheader("🔢 Unique values count")
+    st.dataframe(df.nunique(dropna=True).to_frame("Unique values"))
 
 
 
 # =========================
-# 🔗 Relaciones multivariadas
+# 🔗 Multivariate relationships
 # =========================
 with t3:
-    st.subheader("🔗 Relaciones multivariadas")
-    st.write("""### 🔗 Paso 3: Relaciones multivariadas  
+    st.subheader("🔗 Multivariate relationships")
+    st.write("""### 🔗 Step 3: Multivariate relationships  
 
-En este paso buscamos entender **cómo se relacionan varias variables entre sí**.  
-Algunas preguntas clave que nos ayuda a responder son:  
+In this step we aim to understand **how multiple variables relate to each other**.  
+Some key questions this helps answer are:  
 
-- 📈 **¿Qué variables se mueven juntas?**  
-  (Correlaciones Pearson, Spearman, Kendall para detectar asociaciones lineales o monótonas).  
+- 📈 **Which variables move together?**  
+  (Pearson, Spearman, Kendall correlations to detect linear or monotonic associations).  
 
-- 🔍 **¿Existen relaciones no lineales o subgrupos escondidos?**  
-  (Gráficos de dispersión y densidad permiten ver heterocedasticidad, clusters o outliers).  
+- 🔍 **Are there nonlinear relationships or hidden subgroups?**  
+  (Scatter and density plots allow identifying heteroscedasticity, clusters or outliers).  
 
-- 🧮 **¿Cómo varía una numérica según una categórica?**  
-  (Boxplots o violinplots muestran distribución, medianas y valores extremos por categoría).  
+- 🧮 **How does a numeric variable vary across a categorical variable?**  
+  (Boxplots or violin plots show distribution, medians and extreme values by category).  
 
-- ⚠️ **¿Hay multicolinealidad entre variables numéricas?**  
-  (Correlaciones altas sugieren redundancia y posibles problemas en modelos).  
+- ⚠️ **Is there multicollinearity between numeric variables?**  
+  (High correlations suggest redundancy and possible problems in models).  
 
-- 🧭 **¿Qué combinaciones de variables concentran la mayor varianza del dataset?**  
-  (PCA identifica componentes principales y pesos de cada variable).  
+- 🧭 **Which combinations of variables concentrate the highest variance in the dataset?**  
+  (PCA identifies principal components and weights of each variable).  
 
-En conjunto, estas herramientas permiten **descubrir dependencias, patrones ocultos y estructura global** del dataset, para guiar hipótesis y preparar un modelado más sólido.
+Together, these tools allow **discovering dependencies, hidden patterns and global structure** of the dataset, to guide hypotheses and prepare more robust modeling.
 """)
     st.divider()
-    st.subheader("Matriz de correlación")
+    st.subheader("Correlation matrix")
     c0, c1 = st.columns(2)
-    c0.write("""Mide asociación entre dos variables:
-  - **Pearson (ρ)**: relación **lineal**; asume continuidad y es **sensible a outliers**.
-  - **Spearman (ρₛ)**: correlación de **rangos**; captura relaciones **monótonas** (no requiere linealidad) y es más **robusta a outliers**.
-  - **Kendall (τ)**: basada en **pares concordantes/discordantes**; similar a Spearman, **más conservadora** y estable en **muestras pequeñas**.
-  - **Guía de magnitudes** (orientativa): |corr| < 0.3 débil, 0.3–0.6 moderada, > 0.6 fuerte.
-  - **Cuidado**: correlación ≠ causalidad; muchas pruebas simultáneas ⇒ usa **Bonferroni/FDR**.
+    c0.write("""Measures association between two variables:
+  - **Pearson (ρ)**: **linear** relationship; assumes continuity and is **sensitive to outliers**.
+  - **Spearman (ρₛ)**: **rank correlation**; captures **monotonic relationships** (does not require linearity) and is more **robust to outliers**.
+  - **Kendall (τ)**: based on **concordant/discordant pairs**; similar to Spearman, **more conservative** and stable in **small samples**.
+  - **Magnitude guide** (indicative): |corr| < 0.3 weak, 0.3–0.6 moderate, > 0.6 strong.
+  - **Warning**: correlation ≠ causation; many simultaneous tests ⇒ use **Bonferroni/FDR**.
 """)
     
-    # ---------- Parámetros globales ----------
-    with c0.expander("Parámetros", expanded=False):
+    # ---------- Global parameters ----------
+    with c0.expander("Parameters", expanded=False):
         cA, cB = st.columns(2)
-        corr_method = cA.selectbox("Método correlación", ["pearson","spearman","kendall"], index=0)
-        cluster_heatmap = cB.checkbox("Clusterizar heatmap", True, help="Ordena variables por similitud |corr|.")
-        sample_on = cA.checkbox("Muestrear para dispersión", True, help="Acelera gráficos con muchos puntos.")
-        max_points = cB.slider("Muestra máx.", 500, 50000, 5000, 500)
+        corr_method = cA.selectbox("Correlation method", ["pearson","spearman","kendall"], index=0)
+        cluster_heatmap = cB.checkbox("Cluster heatmap", True, help="Sort variables by similarity |corr|.")
+        sample_on = cA.checkbox("Sampling for scatter", True, help="Speeds up plots with many points.")
+        max_points = cB.slider("Max sample", 500, 50000, 5000, 500)
 
     df_plot = df.sample(n=min(max_points, len(df)), random_state=42) if sample_on else df
 
@@ -452,10 +428,10 @@ En conjunto, estas herramientas permiten **descubrir dependencias, patrones ocul
         except Exception:
             return corr
 
-    # ---------- 1) Matriz de correlación ----------
+    # ---------- 1) Correlation matrix ----------
 
     if len(df.select_dtypes(np.number).columns) >= 2:
-        num_cols = df.select_dtypes(np.number).columns.tolist()  # asegura consistencia si cambió antes
+        num_cols = df.select_dtypes(np.number).columns.tolist()  # ensure consistency if changed before
         corr = _corr_cached(df[num_cols], corr_method)
         if cluster_heatmap:
             corr = _cluster_corr(corr)
@@ -463,11 +439,11 @@ En conjunto, estas herramientas permiten **descubrir dependencias, patrones ocul
         fig_corr = px.imshow(
             corr, text_auto=True, aspect="auto",
             labels=dict(color="ρ"),
-            title=f"Correlación numérica ({corr_method})"
+            title=f"Numeric correlation ({corr_method})"
         )
         c1.plotly_chart(fig_corr, use_container_width=True)
     else:
-        c1.info("Necesitas al menos 2 variables numéricas.")
+        c1.info("You need at least 2 numeric variables.")
 
     c0.code(
             """corr = df[num_cols].corr(method=corr_method)
@@ -479,11 +455,11 @@ st.plotly_chart(fig, use_container_width=True)""",
 
     st.divider()
 
-    # ---------- 2) Dispersión numérica vs numérica ----------
+    # ---------- 2) Numeric vs numeric scatter ----------
     c0, c1 = st.columns(2)
-    c1.subheader("Dispersión numérica vs numérica")
-    c1.write("""Útil para ver **forma**, **no linealidad**, **heterocedasticidad**, **clusters** y **outliers**.  
-    Si hay muchos puntos, usa **densidad (hex)** o **contornos** y colorea por **categoría** (baja cardinalidad).""")
+    c1.subheader("Numeric vs numeric scatter")
+    c1.write("""Useful to visualize **shape**, **non-linearity**, **heteroscedasticity**, **clusters** and **outliers**.  
+    If there are many points, use **density (hex)** or **contours** and color by **category** (low cardinality).""")
     if len(num_cols) >= 2:
         with c1:
             sc1, sc2, sc3 = st.columns(3)
@@ -491,17 +467,17 @@ st.plotly_chart(fig, use_container_width=True)""",
             y_opts = [c for c in num_cols if c != x_col] or num_cols
             y_col = sc2.selectbox("Y", y_opts, index=0, key="scat_y")
 
-            # Color opcional por categórica de baja cardinalidad
+            # Optional color by low-cardinality categorical
             cat_cols = df.select_dtypes(include=["object","category","bool"]).columns.tolist()
             small_cats = [c for c in cat_cols if df[c].nunique(dropna=True) <= 25]
-            color_opt = sc3.selectbox("Color por (opcional)", ["Ninguno"] + small_cats, index=0)
-            color_arg = None if color_opt == "Ninguno" else color_opt
+            color_opt = sc3.selectbox("Color by (optional)", ["None"] + small_cats, index=0)
+            color_arg = None if color_opt == "None" else color_opt
 
-        kind = c1.radio("Tipo", ["Puntos","Densidad (hex)","Contornos"], horizontal=True)
+        kind = c1.radio("Type", ["Points","Density (hex)","Contours"], horizontal=True)
 
-        if kind == "Puntos":
+        if kind == "Points":
             fig_s = px.scatter(df_plot, x=x_col, y=y_col, color=color_arg, opacity=0.7, hover_data=df_plot.columns)
-        elif kind == "Densidad (hex)":
+        elif kind == "Density (hex)":
             fig_s = px.density_heatmap(df_plot, x=x_col, y=y_col, nbinsx=40, nbinsy=40,
                                        marginal_x="histogram", marginal_y="histogram")
         else:
@@ -510,7 +486,7 @@ st.plotly_chart(fig, use_container_width=True)""",
 
         c0.plotly_chart(fig_s, use_container_width=True)
     else:
-        c0.info("Selecciona al menos dos columnas numéricas.")
+        c0.info("Select at least two numeric columns.")
 
     c1.code(
             """fig = px.scatter(df_plot, x=x_col, y=y_col, color=color_arg, opacity=0.7)
@@ -520,23 +496,23 @@ st.plotly_chart(fig, use_container_width=True)""",
 
     st.divider()
 
-    # ---------- 3) Numérica vs categórica (violin + box + Top-N) ----------
+    # ---------- 3) Numeric vs categorical (violin + box + Top-N) ----------
     c0, c1 = st.columns(2)
-    c0.subheader("Distribución numérica por categoría")
-    c0.write("**Violin/box** para distribución y outliers por grupo; limita a **Top-N** categorías y añade **resumen** (count/mean/median/std).")
+    c0.subheader("Numeric distribution by category")
+    c0.write("**Violin/box** for distribution and outliers by group; limit to **Top-N** categories and add **summary** (count/mean/median/std).")
 
     if cat_cols and num_cols:
         with c0:
             sc1, sc2 = st.columns(2)
-            cat_sel = sc1.selectbox("Categoría", cat_cols, key="cat_box")
-            num_sel = sc2.selectbox("Numérica", num_cols, key="num_box")
-        top_n = c0.slider("Top-N categorías por frecuencia", 3, 30, 12)
+            cat_sel = sc1.selectbox("Category", cat_cols, key="cat_box")
+            num_sel = sc2.selectbox("Numeric", num_cols, key="num_box")
+        top_n = c0.slider("Top-N categories by frequency", 3, 30, 12)
 
         top_cats = df_plot[cat_sel].value_counts(dropna=False).head(top_n).index
         data_cat = df_plot[df_plot[cat_sel].isin(top_cats)].copy()
 
         fig_violin = px.violin(data_cat, x=cat_sel, y=num_sel, box=True, points="outliers",
-                               title=f"{num_sel} por {cat_sel} (Top-{top_n})")
+                               title=f"{num_sel} by {cat_sel} (Top-{top_n})")
         c1.plotly_chart(fig_violin, use_container_width=True)
 
         summary = (
@@ -546,7 +522,7 @@ st.plotly_chart(fig, use_container_width=True)""",
         )
         c1.dataframe(summary, use_container_width=True)
     else:
-        c1.info("Necesitas ≥1 columna categórica y ≥1 numérica.")
+        c1.info("You need ≥1 categorical column and ≥1 numeric column.")
 
     c0.code(
             """top_cats = df_plot[cat_sel].value_counts().head(top_n).index
@@ -560,26 +536,26 @@ st.plotly_chart(fig, use_container_width=True)""",
 
     # ---------- 4) PCA ----------
     c0, c1 = st.columns(2)
-    c1.subheader("PCA (2 componentes)")
+    c1.subheader("PCA (2 components)")
     c1.markdown("""
-**¿Qué responde PCA?**  
-- ¿Cuántas **dimensiones latentes** explican la mayor parte de la variación?
-- ¿Qué **variables** impulsan cada componente (loadings)?
-- ¿Existen **clústeres** o **separación** entre grupos en 2D?
+**What does PCA answer?**  
+- How many **latent dimensions** explain most of the variance?
+- Which **variables** drive each component (loadings)?
+- Are there **clusters** or **separation** between groups in 2D?
 
-**Cómo leer los resultados**  
-- **Varianza explicada**: PC1 explica x%, PC2 y% (suma ≈ información retenida en 2D). 
-- **Loadings**: valores altos (±) ⇒ variables **más influyentes**. Un mismo signo en varias variables sugiere un **eje común** (p. ej., “tamaño/ingreso”).  
-- **Gráfico PC1 vs PC2**: busca **grupos**, **gradientes** (color por categoría), **outliers**.
+**How to read results**  
+- **Explained variance**: PC1 explains x%, PC2 y% (sum ≈ information retained in 2D). 
+- **Loadings**: high values (±) ⇒ most **influential variables**. Same sign across variables suggests a **common axis** (e.g., “size/income”).  
+- **PC1 vs PC2 plot**: look for **groups**, **gradients** (color by category), **outliers**.
 
-**Buenas prácticas**  
-- Solo **numéricas** y **sin NaNs**; aplicar **StandardScaler** (z-score).  
-- Revisa **outliers** antes: pueden dominar componentes.  
-- PC1/PC2 con muy baja varianza ⇒ quizá requieras **más PCs** o técnicas no lineales (t-SNE/UMAP).
+**Best practices**  
+- Only **numeric** and **no NaNs**; apply **StandardScaler** (z-score).  
+- Check **outliers** first: they can dominate components.  
+- Low variance in PC1/PC2 ⇒ you may need **more PCs** or non-linear techniques (t-SNE/UMAP).
 
-**Limitaciones**  
-- Es **lineal** y **no supervisado**: no maximiza separación por target.  
-- Componentes son combinaciones; la **interpretación** depende de los **loadings**.
+**Limitations**  
+- It is **linear** and **unsupervised**: it does not maximize separation by target.  
+- Components are combinations; interpretation depends on **loadings**.
 """)
     c0.code(
                 """X = df[num_cols].dropna()
@@ -588,7 +564,7 @@ pca = PCA(n_components=2).fit(Xs)
 scores = pca.transform(Xs)
 explained = pca.explained_variance_ratio_
 pca_df = pd.DataFrame(scores, columns=["PC1","PC2"], index=X.index)
-fig = px.scatter(pca_df, x="PC1", y="PC2", title=f"Var explicada: {explained[:2].sum():.1%}")
+fig = px.scatter(pca_df, x="PC1", y="PC2", title=f"Var explained: {explained[:2].sum():.1%}")
 st.plotly_chart(fig, use_container_width=True)""",
                 language="python"
             )
@@ -596,10 +572,10 @@ st.plotly_chart(fig, use_container_width=True)""",
         X = df[num_cols].dropna(axis=0)
         idx = X.index
 
-        # Color opcional por categórica de baja cardinalidad (alineada al índice)
+        # Optional color by low-cardinality categorical (aligned to index)
         small_cats_full = [c for c in cat_cols if df[c].nunique(dropna=True) <= 25] if cat_cols else []
-        color_pca_opt = c0.selectbox("Color por (opcional)", ["Ninguno"] + small_cats_full, index=0, key="pca_color")
-        color_series = None if color_pca_opt == "Ninguno" else df.loc[idx, color_pca_opt]
+        color_pca_opt = c0.selectbox("Color by (optional)", ["None"] + small_cats_full, index=0, key="pca_color")
+        color_series = None if color_pca_opt == "None" else df.loc[idx, color_pca_opt]
 
         Xs = StandardScaler().fit_transform(X.values)
         pca = PCA(n_components=2).fit(Xs)
@@ -625,75 +601,75 @@ st.plotly_chart(fig, use_container_width=True)""",
                                title="Top |loading| PC2", orientation="h"), use_container_width=True)
 
     else:
-        c0.info("PCA requiere ≥2 columnas numéricas.")
+        c0.info("PCA requires ≥2 numeric columns.")
 
 
 # =========================
-# 🚨 Outliers & Anomalías
+# 🚨 Outliers & Anomalies
 # =========================
 with t4:
-    st.subheader("🚨 Outliers & Anomalías")
+    st.subheader("🚨 Outliers & Anomalies")
 
     st.markdown("""
-    **¿Qué responde este paso?**
-    - ¿Cuántas y cuáles observaciones caen fuera de lo esperado por **dispersión**?
-    - ¿Los extremos son puntuales o sistemáticos por subgrupo?
-    - ¿Existen **anomalías multivariantes** que no se ven univariadamente?
+    **What does this step answer?**
+    - How many and which observations fall outside what is expected by **dispersion**?
+    - Are extremes isolated or systematic by subgroup?
+    - Are there **multivariate anomalies** that are not visible in univariate analysis?
 
-    **Teoría rápida**
-    - **IQR (Tukey)**: marca outliers fuera de \\[Q1 − k·IQR, Q3 + k·IQR\\]. Sencillo y robusto a no-normalidad.
-    - **z-score robusto (MAD)**: usa mediana y **MAD** → menos sensible a outliers que el z-score clásico.
-    - **Percentiles**: define umbrales empíricos (p.ej., 1% y 99%) cuando la forma es muy rara o multimodal.
-    - **Multivariante** (IsolationForest): detecta puntos raros considerando **todas las numéricas a la vez**.
+    **Quick theory**
+    - **IQR (Tukey)**: flags outliers outside \\[Q1 − k·IQR, Q3 + k·IQR\\]. Simple and robust to non-normality.
+    - **Robust z-score (MAD)**: uses median and **MAD** → less sensitive to outliers than classical z-score.
+    - **Percentiles**: defines empirical thresholds (e.g., 1% and 99%) when the shape is irregular or multimodal.
+    - **Multivariate** (IsolationForest): detects unusual points considering **all numeric variables together**.
     """)
 
     num_cols = df.select_dtypes(np.number).columns.tolist()
     if not num_cols:
-        st.info("No hay columnas numéricas disponibles.")
+        st.info("No numeric columns available.")
     else:
-        # ---------- Parámetros ----------
+        # ---------- Parameters ----------
         c0, c1, c2 = st.columns(3)
-        col_out = c0.selectbox("Variable numérica", num_cols, key="outlier_var")
-        method = c1.radio("Método", ["IQR", "Z robusto (MAD)", "Percentiles"], horizontal=True, key="out_method")
+        col_out = c0.selectbox("Numeric variable", num_cols, key="outlier_var")
+        method = c1.radio("Method", ["IQR", "Robust Z (MAD)", "Percentiles"], horizontal=True, key="out_method")
 
-        # Controles dependientes del método
+        # Controls depending on method
         k = None; z_thr = None; q_lo = None; q_hi = None
         if method == "IQR":
             k = c2.slider("k (IQR)", 1.0, 5.0, 1.5, 0.1)
-        elif method == "Z robusto (MAD)":
-            z_thr = c2.slider("|z| robusto", 2.0, 6.0, 3.5, 0.1)
+        elif method == "Robust Z (MAD)":
+            z_thr = c2.slider("|z| robust", 2.0, 6.0, 3.5, 0.1)
         else:
             c2.empty()
             c3, c4 = st.columns(2)
-            q_lo = c3.slider("Percentil inferior", 0.0, 10.0, 1.0, 0.1)
-            q_hi = c4.slider("Percentil superior", 90.0, 100.0, 99.0, 0.1)
+            q_lo = c3.slider("Lower percentile", 0.0, 10.0, 1.0, 0.1)
+            q_hi = c4.slider("Upper percentile", 90.0, 100.0, 99.0, 0.1)
 
         serie = df[col_out].astype(float)
         serie_clean = serie.dropna()
         n_valid = int(serie_clean.shape[0])
 
-        # ---------- Cálculo de outliers ----------
+        # ---------- Outlier calculation ----------
         mask = pd.Series(False, index=df.index)
         lo = hi = None
-        score = pd.Series(np.nan, index=df.index)  # "fuerza" del outlier para ordenar
+        score = pd.Series(np.nan, index=df.index)  # "strength" of the outlier for sorting
 
         if n_valid == 0:
-            st.warning("La variable seleccionada solo contiene nulos.")
+            st.warning("The selected variable only contains null values.")
         else:
             if method == "IQR":
                 Q1, Q3 = serie_clean.quantile([0.25, 0.75])
                 IQR = Q3 - Q1
                 lo, hi = Q1 - k * IQR, Q3 + k * IQR
                 mask = (serie < lo) | (serie > hi)
-                # distancia relativa al rango IQR para ordenar
+                # relative distance to IQR range for sorting
                 med = float(serie_clean.median())
                 score = (serie - med).abs() / (IQR if IQR != 0 else 1.0)
 
-            elif method == "Z robusto (MAD)":
+            elif method == "Robust Z (MAD)":
                 med = float(serie_clean.median())
                 mad = float((serie_clean - med).abs().median())
                 if mad == 0:
-                    st.info("MAD = 0; no se puede calcular z robusto. Prueba IQR o percentiles.")
+                    st.info("MAD = 0; cannot compute robust z-score. Try IQR or percentiles.")
                     mask = pd.Series(False, index=df.index)
                 else:
                     robust_z = (serie - med) / (1.4826 * mad)
@@ -705,38 +681,38 @@ with t4:
                 hi = float(np.percentile(serie_clean, q_hi))
                 mask = (serie < lo) | (serie > hi)
                 med = float(serie_clean.median())
-                score = (serie - med).abs()  # distancia absoluta a la mediana
+                score = (serie - med).abs()  # absolute distance to median
 
             n_out = int(mask.fillna(False).sum())
             pct_out = (n_out / n_valid * 100) if n_valid > 0 else 0.0
 
-            # ---------- Visualizaciones ----------
-            st.subheader("Boxplot (vista rápida)")
+            # ---------- Visualizations ----------
+            st.subheader("Boxplot (quick view)")
             st.plotly_chart(px.box(df, y=col_out, points="outliers",
                                    title=f"Boxplot: {col_out}"),
                             use_container_width=True)
 
-            st.subheader("Distribución y umbrales")
+            st.subheader("Distribution and thresholds")
             fig_hist = px.histogram(serie_clean, nbins=50, opacity=0.85,
-                                    title=f"Histograma: {col_out}")
-            # Líneas de umbral
+                                    title=f"Histogram: {col_out}")
+            # Threshold lines
             try:
                 if method in ["IQR", "Percentiles"]:
                     fig_hist.add_vline(x=lo, line_dash="dash", annotation_text=f"lo={lo:,.3g}")
                     fig_hist.add_vline(x=hi, line_dash="dash", annotation_text=f"hi={hi:,.3g}")
-                elif method == "Z robusto (MAD)":
-                    fig_hist.add_vline(x=med, line_dash="dot", annotation_text=f"mediana={med:,.3g}")
+                elif method == "Robust Z (MAD)":
+                    fig_hist.add_vline(x=med, line_dash="dot", annotation_text=f"median={med:,.3g}")
             except Exception:
                 pass
             st.plotly_chart(fig_hist, use_container_width=True)
 
-            # ---------- Métricas + tabla ----------
+            # ---------- Metrics + table ----------
             cA, cB = st.columns(2)
-            cA.metric("Outliers detectados", f"{n_out:,}")
-            cB.metric("% sobre válidos", f"{pct_out:.2f}%")
+            cA.metric("Detected outliers", f"{n_out:,}")
+            cB.metric("% over valid", f"{pct_out:.2f}%")
 
-            st.subheader("Observaciones atípicas (Top-N por 'fuerza')")
-            top_n = st.slider("Top-N a mostrar", 10, 200, 50, 10)
+            st.subheader("Outlier observations (Top-N by 'strength')")
+            top_n = st.slider("Top-N to display", 10, 200, 50, 10)
             out_df = (
                 df.loc[mask].assign(_out_score=score[mask])
                 .sort_values("_out_score", ascending=False)
@@ -744,27 +720,27 @@ with t4:
             )
             st.dataframe(out_df, use_container_width=True)
 
-            # Descargar CSV de outliers
+            # Download CSV of outliers
             if n_out > 0:
                 csv_buf = io.StringIO()
                 df.loc[mask].assign(_out_score=score[mask]).to_csv(csv_buf, index=False)
                 st.download_button(
-                    "⬇️ Descargar outliers (CSV)",
+                    "⬇️ Download outliers (CSV)",
                     data=csv_buf.getvalue(),
                     file_name=f"outliers_{col_out}_{method.replace(' ','_')}.csv",
                     mime="text/csv",
                     use_container_width=True
                 )
 
-            # ---------- Código (expander) ----------
-            with st.expander("Ver código (detección univariante)"):
+            # ---------- Code (expander) ----------
+            with st.expander("View code (univariate detection)"):
                 st.code(
                     """# IQR
 Q1, Q3 = x.quantile([0.25, 0.75]); IQR = Q3 - Q1
 lo, hi = Q1 - 1.5*IQR, Q3 + 1.5*IQR
 mask_iqr = (x < lo) | (x > hi)
 
-# z robusto (MAD)
+# robust z (MAD)
 med = x.median(); mad = (x - med).abs().median()
 robust_z = (x - med) / (1.4826 * mad)
 mask_mad = robust_z.abs() > 3.5
@@ -775,30 +751,30 @@ mask_pct = (x < lo) | (x > hi)""",
                     language="python"
                 )
 
-        # ---------- Multivariante opcional ----------
+        # ---------- Optional multivariate ----------
         st.divider()
-        st.subheader("🔀 Detección multivariante (IsolationForest) — opcional")
-        st.caption("Útil cuando un punto no es extremo en 1D, pero sí al combinar varias numéricas.")
+        st.subheader("🔀 Multivariate detection (IsolationForest) — optional")
+        st.caption("Useful when a point is not extreme in 1D, but is when combining multiple numeric variables.")
 
-        enable_if = st.checkbox("Activar IsolationForest", value=False)
+        enable_if = st.checkbox("Enable IsolationForest", value=False)
         if enable_if:
             try:
                 from sklearn.ensemble import IsolationForest
                 from sklearn.preprocessing import StandardScaler
                 from sklearn.decomposition import PCA
 
-                feats = st.multiselect("Variables numéricas a considerar", num_cols,
+                feats = st.multiselect("Numeric variables to consider", num_cols,
                                        default=num_cols[:min(5, len(num_cols))])
                 if len(feats) == 0:
-                    st.info("Selecciona al menos 1 variable numérica.")
+                    st.info("Select at least 1 numeric variable.")
                 else:
                     c1, c2 = st.columns(2)
-                    contamination = c1.slider("Proporción esperada de anomalías", 0.01, 0.20, 0.05, 0.01)
-                    n_estimators = c2.slider("Árboles (n_estimators)", 50, 400, 200, 50)
+                    contamination = c1.slider("Expected anomaly proportion", 0.01, 0.20, 0.05, 0.01)
+                    n_estimators = c2.slider("Trees (n_estimators)", 50, 400, 200, 50)
 
                     X = df[feats].dropna()
                     if X.empty:
-                        st.info("No hay filas completas para las variables seleccionadas.")
+                        st.info("No complete rows for selected variables.")
                     else:
                         iso = IsolationForest(
                             contamination=contamination,
@@ -807,7 +783,7 @@ mask_pct = (x < lo) | (x > hi)""",
                         ).fit(X)
 
                         pred = iso.predict(X)  # -1 = outlier
-                        score_if = iso.decision_function(X)  # menor = más raro
+                        score_if = iso.decision_function(X)  # lower = more anomalous
                         res = df.loc[X.index].copy()
                         res["_anomaly_if"] = (pred == -1)
                         res["_if_score"] = score_if
@@ -815,93 +791,94 @@ mask_pct = (x < lo) | (x > hi)""",
                         n_anom = int(res["_anomaly_if"].sum())
                         pct_anom = n_anom / res.shape[0] * 100
                         cA, cB = st.columns(2)
-                        cA.metric("Anomalías (IForest)", f"{n_anom:,}")
-                        cB.metric("% sobre válidos", f"{pct_anom:.2f}%")
+                        cA.metric("Anomalies (IForest)", f"{n_anom:,}")
+                        cB.metric("% over valid", f"{pct_anom:.2f}%")
 
-                        # Vista en PCA 2D para interpretar
+                        # PCA 2D view for interpretation
                         Xs = StandardScaler().fit_transform(X)
                         p2 = PCA(n_components=2).fit_transform(Xs)
                         plot_df = pd.DataFrame({
                             "PC1": p2[:, 0],
                             "PC2": p2[:, 1],
-                            "Anomalía": np.where(res["_anomaly_if"], "Sí", "No")
+                            "Anomaly": np.where(res["_anomaly_if"], "Yes", "No")
                         }, index=X.index)
                         fig_if = px.scatter(
-                            plot_df, x="PC1", y="PC2", color="Anomalía",
-                            title="IsolationForest en espacio PCA (2D)",
+                            plot_df, x="PC1", y="PC2", color="Anomaly",
+                            title="IsolationForest in PCA space (2D)",
                             opacity=0.85
                         )
                         st.plotly_chart(fig_if, use_container_width=True)
 
-                        st.subheader("Muestras más anómalas (según score)")
-                        show_n = st.slider("Mostrar Top-N", 10, 200, 50, 10, key="if_topn")
+                        st.subheader("Most anomalous samples (by score)")
+                        show_n = st.slider("Show Top-N", 10, 200, 50, 10, key="if_topn")
                         st.dataframe(
                             res.sort_values("_if_score").head(show_n),
                             use_container_width=True
                         )
 
-                        with st.expander("Ver código (IsolationForest)"):
+                        with st.expander("View code (IsolationForest)"):
                             st.code(
                                 """from sklearn.ensemble import IsolationForest
 iso = IsolationForest(contamination=0.05, n_estimators=200, random_state=42).fit(X)
 pred = iso.predict(X)          # -1 = outlier
-score = iso.decision_function(X)  # menor = más raro
+score = iso.decision_function(X)  # lower = more anomalous
 mask_if = pred == -1""",
                                 language="python"
                             )
             except Exception as e:
-                st.info(f"No se pudo activar IsolationForest: {e}")
+                st.info(f"Could not enable IsolationForest: {e}")
 
-    # ---------- Sugerencias de tratamiento ----------
+    # ---------- Treatment suggestions ----------
     st.divider()
-    with st.expander("💊 Tratamiento: opciones habituales"):
+    with st.expander("💊 Treatment: common options"):
         st.markdown("""
-        - **Inspección manual** y corrección si es error de captura.
-        - **Winsorización (clip)** en percentiles (p.ej., 1%–99%).
-        - **Transformaciones** (log/sqrt/Box-Cox) si hay sesgo fuerte.
-        - **Modelado robusto** (árboles/boosting, regularización) si no quieres remover.
-        - **Eliminar** casos extremos solo si justificas su falta de representatividad.
+        - **Manual inspection** and correction if it is a data entry error.
+        - **Winsorization (clip)** at percentiles (e.g., 1%–99%).
+        - **Transformations** (log/sqrt/Box-Cox) if there is strong skewness.
+        - **Robust modeling** (trees/boosting, regularization) if you prefer not to remove them.
+        - **Remove** extreme cases only if their lack of representativeness is justified.
 
-        **Snippet winsorización:**
+        **Winsorization snippet:**
         ```python
         lo, hi = x.quantile([0.01, 0.99])
         x_wins = x.clip(lo, hi)
         ```
         """)
+        
 # =========================
 # 🧩 Categóricas & Balance de clases
 # =========================
 with t5:
-    st.subheader("🧩 Categóricas & Balance de clases")
+    st.subheader("🧩 Categoricals & Class Balance")
 
-    # Asegura listas de columnas (recalcula por si cambió df)
+    # Ensure column lists (recalculate in case df changed)
     cat_cols = df.select_dtypes(include=["object", "category", "bool"]).columns.tolist()
     num_cols = df.select_dtypes(include=np.number).columns.tolist()
 
     st.markdown("""
-    **¿Qué responde este paso?**  
-    - ¿Cuáles son las categorías más **frecuentes** (Top-N) y cuánto representan (%)?  
-    - ¿Hay **desbalance** fuerte entre clases que pueda afectar el modelado?  
-    - ¿Cómo contribuye cada categoría a un **valor numérico total** (treemap)?  
-    - ¿Cómo se comporta un **objetivo numérico** dentro de cada categoría (medias/medianas)?  
+    **What does this step answer?**  
+    - Which categories are the most **frequent** (Top-N) and what do they represent (%)?  
+    - Is there strong **class imbalance** that could affect modeling?  
+    - How does each category contribute to a **total numeric value** (treemap)?  
+    - How does a **numeric target** behave within each category (means/medians)?  
     """)
 
     st.divider()
 
     # =========================
-    # 1) Treemap (Categoría -> Valor numérico)
+    # 1) Treemap (Category -> Numeric value)
     # =========================
     if cat_cols and num_cols:
         c0, c1 = st.columns(2)
 
-        c0.subheader("🌳 Treemap (Categoría → Valor)")
+        c0.subheader("🌳 Treemap (Category → Value)")
         c0.write(
-                "El **treemap** muestra la contribución de cada categoría a un **total numérico** "
-                "(área proporcional al valor). Útil para detectar categorías dominantes."
+                "The **treemap** shows the contribution of each category to a **numeric total** "
+                "(area proportional to the value). Useful to detect dominant categories."
             )
         c0.code(
-                    """cat_t = st.selectbox("Categoría", cat_cols, key="t5_treemap_cat")
-val_t = st.selectbox("Valor numérico", num_cols, key="t5_treemap_val")
+                    """cat_t = st.selectbox("Category", cat_cols, key="t5_treemap_cat")
+val_t = st.selectbox("Numeric value", num_cols, key="t5_treemap_val")
 fig_tm = px.treemap(df, path=[cat_t], values=val_t, title=f"Treemap: {cat_t} → {val_t}")
 st.plotly_chart(fig_tm, use_container_width=True)""",
                     language="python"
@@ -909,43 +886,43 @@ st.plotly_chart(fig_tm, use_container_width=True)""",
 
         with c0:
             sc0, sc1 = st.columns(2)
-            cat_t = sc0.selectbox("Categoría", cat_cols, key="t5_treemap_cat")
-            val_t = sc1.selectbox("Valor numérico", num_cols, key="t5_treemap_val")
+            cat_t = sc0.selectbox("Category", cat_cols, key="t5_treemap_cat")
+            val_t = sc1.selectbox("Numeric value", num_cols, key="t5_treemap_val")
             fig_tm = px.treemap(df, path=[cat_t], values=val_t, title=f"Treemap: {cat_t} → {val_t}")
         
         c1.plotly_chart(fig_tm, use_container_width=True)
 
     else:
-        st.info("Para el Treemap se requiere al menos una columna categórica y una numérica.")
+        st.info("Treemap requires at least one categorical column and one numeric column.")
 
     st.divider()
 
     # =========================
-    # 2) Distribución de categorías (Top-N + 'Otros') + % robusto
+    # 2) Category distribution (Top-N + 'Others') + robust %
     # =========================
     if cat_cols:
         c0, c1 = st.columns(2)
 
-        c1.subheader("📊 Distribución de categorías (Top-N + 'Otros')")
+        c1.subheader("📊 Category distribution (Top-N + 'Others')")
         c1.write(
-                "Mostramos **Top-N** categorías por frecuencia y agrupamos el resto en **'Otros'** "
-                "para mantener legibilidad. Además, calculamos el **%** de cada categoría."
+                "We show **Top-N** categories by frequency and group the rest into **'Others'** "
+                "to maintain readability. We also compute the **%** of each category."
             )
 
         c1.code(
-                    """col_cat = st.selectbox("Variable categórica", cat_cols, key="t5_cat_var")
-top_n = st.slider("Top-N categorías", 3, 30, 10, key="t5_topn")
+                    """col_cat = st.selectbox("Categorical variable", cat_cols, key="t5_cat_var")
+top_n = st.slider("Top-N categories", 3, 30, 10, key="t5_topn")
 
-# Conteos robustos
-vc = df[col_cat].value_counts(dropna=False)          # Serie de conteos
+# Robust counts
+vc = df[col_cat].value_counts(dropna=False)          # Count series
 top = vc.head(top_n)
 others = vc.iloc[top_n:].sum()
 
 plot_s = top.copy()
 if others > 0:
-    plot_s.loc["Otros"] = int(others)
+    plot_s.loc["Others"] = int(others)
 
-# DataFrame final sin duplicados y con numéricos
+# Final dataframe without duplicates and numeric
 counts_df = (
     plot_s.rename("count")
          .reset_index()
@@ -962,8 +939,8 @@ fig_bar = px.bar(
     counts_df.sort_values("count", ascending=False),
     x=col_cat, y="count",
     text=counts_df["pct"].map(lambda x: f"{x:.1f}%"),
-    title=f"Distribución: {col_cat}",
-    labels={"count": "Frecuencia"}
+    title=f"Distribution: {col_cat}",
+    labels={"count": "Frequency"}
 )
 fig_bar.update_traces(textposition="outside", cliponaxis=False)
 st.plotly_chart(fig_bar, use_container_width=True)""",
@@ -971,17 +948,17 @@ st.plotly_chart(fig_bar, use_container_width=True)""",
                 )
 
         with c0:
-            # --- UI y cálculo robusto ---
-            col_cat = st.selectbox("Variable categórica", cat_cols, key="t5_cat_var")
-            top_n = st.slider("Top-N categorías", 3, 30, 10, key="t5_topn")
+            # --- UI and robust calculation ---
+            col_cat = st.selectbox("Categorical variable", cat_cols, key="t5_cat_var")
+            top_n = st.slider("Top-N categories", 3, 30, 10, key="t5_topn")
 
-            vc = df[col_cat].value_counts(dropna=False)   # Serie
+            vc = df[col_cat].value_counts(dropna=False)   # Series
             top = vc.head(top_n)
             others = vc.iloc[top_n:].sum()
 
             plot_s = top.copy()
             if others > 0:
-                plot_s.loc["Otros"] = int(others)
+                plot_s.loc["Others"] = int(others)
 
             counts_df = (
                 plot_s.rename("count")
@@ -999,14 +976,13 @@ st.plotly_chart(fig_bar, use_container_width=True)""",
                 counts_df.sort_values("count", ascending=False),
                 x=col_cat, y="count",
                 text=counts_df["pct"].map(lambda x: f"{x:.1f}%"),
-                title=f"Distribución: {col_cat}",
-                labels={"count": "Frecuencia"}
+                title=f"Distribution: {col_cat}",
+                labels={"count": "Frequency"}
             )
             fig_bar.update_traces(textposition="outside", cliponaxis=False)
             st.plotly_chart(fig_bar, use_container_width=True)
 
-        # ===== Balance rápido de clases =====
-        # Basado en los conteos "puros" (sin 'Otros') para evaluar desbalance
+        # ===== Quick class balance =====
         major_cat = vc.index[0] if len(vc) else None
         if major_cat is not None:
             major_count = int(vc.iloc[0])
@@ -1015,35 +991,35 @@ st.plotly_chart(fig_bar, use_container_width=True)""",
 
             with c0:
                 cA, cB, cC = st.columns(3)
-                cA.metric("Categoría mayoritaria", str(major_cat))
-                cB.metric("Frecuencia mayoritaria", f"{major_count:,}")
-                cC.metric("% mayoritario", f"{major_pct:.1f}%")
+                cA.metric("Majority class", str(major_cat))
+                cB.metric("Majority frequency", f"{major_count:,}")
+                cC.metric("Majority %", f"{major_pct:.1f}%")
 
             if major_pct >= 80:
-                st.warning("Desbalance fuerte (≥80/20). Considera técnicas: reponderación, undersampling/oversampling, métricas por clase.")
+                st.warning("Strong imbalance (≥80/20). Consider techniques: reweighting, undersampling/oversampling, class-based metrics.")
 
     else:
-        st.info("No hay columnas categóricas disponibles.")
+        st.info("No categorical columns available.")
 
     st.divider()
 
     # =========================
-    # 3) Relación con objetivo numérico (media/mediana por categoría)
+    # 3) Relationship with numeric target (mean/median by category)
     # =========================
     if cat_cols and num_cols:
         c0, c1 = st.columns(2)
 
         with c0:
-            st.subheader("🎯 Objetivo numérico por categoría")
+            st.subheader("🎯 Numeric target by category")
             st.write(
-                "Compara un objetivo numérico entre categorías usando **media** o **mediana** "
-                "(robusta a outliers). Para legibilidad, se limita a las **Top-N** categorías."
+                "Compare a numeric target across categories using **mean** or **median** "
+                "(robust to outliers). For readability, it is limited to **Top-N** categories."
             )
             st.code(
-                    """col_cat2 = st.selectbox("Categoría", cat_cols, key="t5_target_cat")
-target = st.selectbox("Objetivo numérico", num_cols, key="t5_target_val")
-agg_fn = st.selectbox("Agregación", ["mean", "median", "sum"], index=0, key="t5_target_agg")
-top_n_target = st.slider("Top-N (por frecuencia)", 3, 30, 10, key="t5_target_topn")
+                    """col_cat2 = st.selectbox("Category", cat_cols, key="t5_target_cat")
+target = st.selectbox("Numeric target", num_cols, key="t5_target_val")
+agg_fn = st.selectbox("Aggregation", ["mean", "median", "sum"], index=0, key="t5_target_agg")
+top_n_target = st.slider("Top-N (by frequency)", 3, 30, 10, key="t5_target_topn")
 
 vc2 = df[col_cat2].value_counts(dropna=False)
 keep = vc2.head(top_n_target).index
@@ -1053,7 +1029,7 @@ agg = getattr(data_f.groupby(col_cat2, dropna=False)[target], agg_fn)().reset_in
 agg = agg.sort_values(by=agg.columns[1], ascending=False)
 
 fig_t = px.bar(agg, x=col_cat2, y=agg.columns[1],
-               title=f"{target} ({agg_fn}) por {col_cat2}",
+               title=f"{target} ({agg_fn}) by {col_cat2}",
                labels={agg.columns[1]: f"{target} ({agg_fn})"})
 st.plotly_chart(fig_t, use_container_width=True)""",
                     language="python"
@@ -1061,10 +1037,10 @@ st.plotly_chart(fig_t, use_container_width=True)""",
 
         with c1:
             sc0, sc1, sc2 = st.columns(3)
-            col_cat2 = sc0.selectbox("Categoría", cat_cols, key="t5_target_cat")
-            target = sc1.selectbox("Objetivo numérico", num_cols, key="t5_target_val")
-            agg_fn = sc2.selectbox("Agregación", ["mean", "median", "sum"], index=0, key="t5_target_agg")
-            top_n_target = st.slider("Top-N (por frecuencia)", 3, 30, 10, key="t5_target_topn")
+            col_cat2 = sc0.selectbox("Category", cat_cols, key="t5_target_cat")
+            target = sc1.selectbox("Numeric target", num_cols, key="t5_target_val")
+            agg_fn = sc2.selectbox("Aggregation", ["mean", "median", "sum"], index=0, key="t5_target_agg")
+            top_n_target = st.slider("Top-N (by frequency)", 3, 30, 10, key="t5_target_topn")
 
             vc2 = df[col_cat2].value_counts(dropna=False)
             keep = vc2.head(top_n_target).index
@@ -1075,22 +1051,22 @@ st.plotly_chart(fig_t, use_container_width=True)""",
 
             fig_t = px.bar(
                 agg, x=col_cat2, y=target,
-                title=f"{target} ({agg_fn}) por {col_cat2}",
+                title=f"{target} ({agg_fn}) by {col_cat2}",
                 labels={target: f"{target} ({agg_fn})"}
             )
             st.plotly_chart(fig_t, use_container_width=True)
     else:
-        st.info("Para esta sección se requiere al menos una categórica y una numérica.")
+        st.info("This section requires at least one categorical and one numeric column.")
 
 # =========================
-# ⏳ Series de tiempo (t6 completo y robusto)
+# ⏳ Time series (t6 complete and robust)
 # =========================
 with t6:
-    st.subheader("⏳ Series de tiempo")
+    st.subheader("⏳ Time series")
 
     # ---------- Helpers ----------
     def _is_parseable_datetime(s: pd.Series, min_ok: float = 0.5) -> bool:
-        """True si >= min_ok se puede parsear a datetime."""
+        """True if >= min_ok can be parsed to datetime."""
         if np.issubdtype(s.dtype, np.datetime64):
             return True
         try:
@@ -1100,13 +1076,13 @@ with t6:
             return False
 
     def _ensure_datetime_col(df_: pd.DataFrame, col: str) -> pd.Series:
-        """Convierte a datetime si no lo es."""
+        """Converts to datetime if it is not."""
         if np.issubdtype(df_[col].dtype, np.datetime64):
             return df_[col]
         return pd.to_datetime(df_[col], errors="coerce", infer_datetime_format=True)
 
     def _looks_like_id(name: str) -> bool:
-        """Heurística simple para excluir identificadores numéricos."""
+        """Simple heuristic to exclude numeric identifiers."""
         n = str(name).lower()
         return (
             n == "id" or n == "index" or
@@ -1114,78 +1090,78 @@ with t6:
             n.endswith(" id") or n.startswith("id ")
         )
 
-    # ---------- Detección de columnas de fecha ----------
+    # ---------- Date column detection ----------
     date_candidates = [c for c in df.columns if _is_parseable_datetime(df[c])]
 
     if not date_candidates:
-        st.info("No se detectaron columnas de fecha.")
+        st.info("No date columns were detected.")
     else:
-        # ---------- Layout 2 columnas ----------
+        # ---------- 2-column layout ----------
         c0, c1 = st.columns(2)
 
-        # ===== Lado izquierdo: teoría + parámetros =====
+        # ===== Left side: theory + parameters =====
         with c0:
-            st.subheader("Qué responde")
+            st.subheader("What it answers")
             st.write(
-                "- ¿Cómo evoluciona la métrica en el tiempo (tendencia/estacionalidad)?\n"
-                "- ¿Cómo afectan la **frecuencia** y la **agregación** (sum/mean/…)?\n"
-                "- ¿Cuál es el **cambio %** período a período o **interanual (YoY)**?\n"
-                "- ¿Hay diferencias por **categoría** (líneas múltiples)?"
+                "- How does the metric evolve over time (trend/seasonality)?\n"
+                "- How do **frequency** and **aggregation** (sum/mean/…) affect it?\n"
+                "- What is the **% change** period-over-period or **year-over-year (YoY)**?\n"
+                "- Are there differences by **category** (multiple lines)?"
             )
 
-            st.subheader("Parámetros")
-            date_col = st.selectbox("Columna de fecha", date_candidates, key="ts_date_col")
+            st.subheader("Parameters")
+            date_col = st.selectbox("Date column", date_candidates, key="ts_date_col")
 
-        # Construir df_ts con fecha válida ANTES de elegir la métrica
+        # Build df_ts with valid date BEFORE choosing metric
         df_ts = df.copy()
         df_ts[date_col] = _ensure_datetime_col(df_ts, date_col)
         df_ts = df_ts.dropna(subset=[date_col]).sort_values(by=date_col)
 
-        # Numéricas válidas (excluye identificadores)
+        # Valid numeric columns (exclude identifiers)
         num_cols_ts = [
             c for c in df_ts.select_dtypes(np.number).columns
             if c != date_col and not _looks_like_id(c)
         ]
 
-        # Categóricas de baja cardinalidad
+        # Low-cardinality categoricals
         cat_cols_all = df_ts.select_dtypes(include=["object", "category", "bool"]).columns.tolist()
         small_cats = [c for c in cat_cols_all if df_ts[c].nunique(dropna=True) <= 12]
 
         with c0:
             if not num_cols_ts:
-                st.warning("No hay columnas numéricas válidas para series de tiempo (excluyendo identificadores como 'id').")
+                st.warning("No valid numeric columns for time series (excluding identifiers like 'id').")
             else:
-                val_col = st.selectbox("Variable numérica", num_cols_ts, key="ts_val_col")
-                split_col = st.selectbox("Dividir por categoría (opcional)", ["Ninguno"] + small_cats, key="ts_split")
+                val_col = st.selectbox("Numeric variable", num_cols_ts, key="ts_val_col")
+                split_col = st.selectbox("Split by category (optional)", ["None"] + small_cats, key="ts_split")
 
                 cA, cB, cC = st.columns(3)
-                freq_lbl = cA.selectbox("Frecuencia", ["D (día)", "W (semana)", "M (mes)", "Q (trimestre)", "Y (año)"], index=2, key="ts_freq")
-                agg_fn_name = cB.selectbox("Agregación", ["sum", "mean", "median", "max", "min"], index=0, key="ts_agg")
-                fill_mode = cC.selectbox("Relleno faltantes", ["Ninguno", "Forward-fill", "Cero"], index=0, key="ts_fill")
+                freq_lbl = cA.selectbox("Frequency", ["D (day)", "W (week)", "M (month)", "Q (quarter)", "Y (year)"], index=2, key="ts_freq")
+                agg_fn_name = cB.selectbox("Aggregation", ["sum", "mean", "median", "max", "min"], index=0, key="ts_agg")
+                fill_mode = cC.selectbox("Missing fill", ["None", "Forward-fill", "Zero"], index=0, key="ts_fill")
 
                 cD, cE = st.columns(2)
-                pct_kind = cD.selectbox("% cambio", ["Ninguno", "Período a período", "Interanual (YoY)"], index=0, key="ts_pct")
-                show_ma = cE.checkbox("Media móvil", value=True, key="ts_ma")
-                ma_window = st.slider("Ventana MA (periodos)", 2, 60, 12, key="ts_ma_win") if show_ma else None
+                pct_kind = cD.selectbox("% change", ["None", "Period-over-period", "Year-over-year (YoY)"], index=0, key="ts_pct")
+                show_ma = cE.checkbox("Moving average", value=True, key="ts_ma")
+                ma_window = st.slider("MA window (periods)", 2, 60, 12, key="ts_ma_win") if show_ma else None
 
                 st.code(
-                        """# Resample básico (una serie)
+                        """# Basic resample (single series)
 ts = (df.set_index(date_col).sort_index()[val_col]
         .resample('M').sum()
         .reset_index())""",
                         language="python"
                     )
 
-        # ===== Lado derecho: resultados =====
+        # ===== Right side: results =====
         with c1:
             if not num_cols_ts:
                 st.stop()
 
-            freq_map = {"D (día)": "D", "W (semana)": "W", "M (mes)": "M", "Q (trimestre)": "Q", "Y (año)": "Y"}
+            freq_map = {"D (day)": "D", "W (week)": "W", "M (month)": "M", "Q (quarter)": "Q", "Y (year)": "Y"}
             f = freq_map[freq_lbl]
 
-            if split_col == "Ninguno":
-                # --- Serie única ---
+            if split_col == "None":
+                # --- Single series ---
                 s = (
                     df_ts.set_index(date_col)
                          .loc[:, val_col]
@@ -1194,12 +1170,12 @@ ts = (df.set_index(date_col).sort_index()[val_col]
                 )
                 if fill_mode == "Forward-fill":
                     s = s.ffill()
-                elif fill_mode == "Cero":
+                elif fill_mode == "Zero":
                     s = s.fillna(0)
 
                 ts = s.reset_index().rename(columns={val_col: val_col})
 
-                # Media móvil
+                # Moving average
                 ys = [val_col]
                 if show_ma:
                     ts["MA"] = ts[val_col].rolling(int(ma_window)).mean()
@@ -1207,14 +1183,14 @@ ts = (df.set_index(date_col).sort_index()[val_col]
 
                 fig_ts = px.line(
                     ts, x=date_col, y=ys,
-                    title=f"{val_col} — {agg_fn_name} por {f}",
-                    labels={date_col: "Fecha"}
+                    title=f"{val_col} — {agg_fn_name} by {f}",
+                    labels={date_col: "Date"}
                 )
                 st.plotly_chart(fig_ts, use_container_width=True)
 
-                # % cambio
-                if pct_kind != "Ninguno":
-                    if pct_kind == "Período a período":
+                # % change
+                if pct_kind != "None":
+                    if pct_kind == "Period-over-period":
                         periods = 1
                     else:
                         shift_map = {"M": 12, "Q": 4, "W": 52, "D": 365, "Y": 1}
@@ -1222,7 +1198,7 @@ ts = (df.set_index(date_col).sort_index()[val_col]
                     ts["pct_change"] = ts[val_col].pct_change(periods=periods) * 100
                     fig_pct = px.line(
                         ts, x=date_col, y="pct_change",
-                        title=("Cambio % período a período" if periods == 1 else "Cambio % interanual (YoY)"),
+                        title=("Period-over-period % change" if periods == 1 else "Year-over-year (YoY) % change"),
                         labels={"pct_change": "%"}
                     )
                     st.plotly_chart(fig_pct, use_container_width=True)
@@ -1230,50 +1206,50 @@ ts = (df.set_index(date_col).sort_index()[val_col]
                 st.dataframe(ts.tail(12), use_container_width=True)
 
                 st.code(
-                        """# % cambio
-periods = 12  # ejemplo mensual YoY
+                        """# % change
+periods = 12  # monthly YoY example
 ts["pct_change"] = ts[val_col].pct_change(periods=periods) * 100""",
                         language="python"
                     )
 
             else:
-                # --- Múltiples series por categoría ---
+                # --- Multiple series by category ---
                 grp = (
                     df_ts.groupby([pd.Grouper(key=date_col, freq=f), split_col])[val_col]
                          .agg(agg_fn_name)
                          .reset_index()
                 )
 
-                # Relleno por grupo (no crea nuevas fechas, solo rellena NaN existentes)
-                if fill_mode != "Ninguno":
+                # Fill by group
+                if fill_mode != "None":
                     def _fill(g):
                         if fill_mode == "Forward-fill":
                             g[val_col] = g[val_col].ffill()
-                        elif fill_mode == "Cero":
+                        elif fill_mode == "Zero":
                             g[val_col] = g[val_col].fillna(0)
                         return g
                     grp = grp.groupby(split_col, group_keys=False).apply(_fill)
 
-                # Media móvil por grupo
+                # Moving average by group
                 if show_ma:
                     grp["MA"] = grp.groupby(split_col)[val_col].transform(lambda s: s.rolling(int(ma_window)).mean())
 
                 fig_multi = px.line(
                     grp, x=date_col, y=val_col, color=split_col,
-                    title=f"{val_col} — {agg_fn_name} por {f} (por {split_col})"
+                    title=f"{val_col} — {agg_fn_name} by {f} (by {split_col})"
                 )
                 st.plotly_chart(fig_multi, use_container_width=True)
 
                 if show_ma:
                     fig_ma = px.line(
                         grp, x=date_col, y="MA", color=split_col,
-                        title=f"Media móvil ({ma_window}) por {split_col}"
+                        title=f"Moving average ({ma_window}) by {split_col}"
                     )
                     st.plotly_chart(fig_ma, use_container_width=True)
 
-                # % cambio por grupo
-                if pct_kind != "Ninguno":
-                    if pct_kind == "Período a período":
+                # % change by group
+                if pct_kind != "None":
+                    if pct_kind == "Period-over-period":
                         periods = 1
                     else:
                         shift_map = {"M": 12, "Q": 4, "W": 52, "D": 365, "Y": 1}
@@ -1281,7 +1257,7 @@ ts["pct_change"] = ts[val_col].pct_change(periods=periods) * 100""",
                     grp["pct_change"] = grp.groupby(split_col)[val_col].pct_change(periods=periods) * 100
                     fig_pctm = px.line(
                         grp, x=date_col, y="pct_change", color=split_col,
-                        title=("Cambio % período a período" if periods == 1 else "Cambio % interanual (YoY)"),
+                        title=("Period-over-period % change" if periods == 1 else "Year-over-year (YoY) % change"),
                         labels={"pct_change": "%"}
                     )
                     st.plotly_chart(fig_pctm, use_container_width=True)
@@ -1296,18 +1272,16 @@ ts["pct_change"] = ts[val_col].pct_change(periods=periods) * 100""",
     .groupby([pd.Grouper(key=date_col, freq='M'), split_col])[val_col]
     .sum()
     .reset_index())
-# Rolling por grupo
+# Rolling by group
 grp["MA"] = grp.groupby(split_col)[val_col].transform(lambda s: s.rolling(12).mean())""",
                         language="python"
                     )
 
-        c0.write("💡 Tips & buenas prácticas")
+        c0.write("💡 Tips & best practices")
         c0.markdown(
-                "- Si la fecha no es `datetime`, se **parsea automáticamente**.\n"
-                "- **Frecuencia** cambia unidad de análisis (D/W/M/Q/Y) y **agregación** define el resumen.\n"
-                "- **Forward-fill** es útil para tasas; **Cero** para conteos cuando faltan periodos.\n"
-                "- **YoY** requiere al menos un año de historial a la misma frecuencia.\n"
-                "- Para descomposición estacional: `statsmodels.tsa.seasonal_decompose` (opcional)."
+                "- If the date is not `datetime`, it is **parsed automatically**.\n"
+                "- **Frequency** changes unit of analysis (D/W/M/Q/Y) and **aggregation** defines the summary.\n"
+                "- **Forward-fill** is useful for rates; **Zero** for counts when periods are missing.\n"
+                "- **YoY** requires at least one year of history at the same frequency.\n"
+                "- For seasonal decomposition: `statsmodels.tsa.seasonal_decompose` (optional)."
             )
-
-

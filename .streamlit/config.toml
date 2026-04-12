@@ -1,9 +1,8 @@
 [theme]
-
-primaryColor = "#c97a9e"             # rosa dusty elegante (menos saturado)
-backgroundColor = "#ffffff"          # blanco limpio
-secondaryBackgroundColor = "#faf6f8" # rosa ultra suave
-textColor = "#2f2f35"                # gris oscuro suave
+primaryColor = "#C97A9E"
+backgroundColor = "#F7F7FB"          # 👈 ESTE ES EL FONDO REAL
+secondaryBackgroundColor = "#F6F8F7"
+textColor = "#2C3333"
 font = "serif"
 
 [client]

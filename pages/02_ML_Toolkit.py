@@ -22,50 +22,22 @@ from io import BytesIO
 # Layout & Sidebar
 # =========================
 st.set_page_config(page_title="Machine Learning Toolkit", layout="wide")
+
+nav0, nav1, nav2, nav3, nav4, nav5, nav6, nav7 = st.columns([0.12,0.21,0.16,0.22,0.21,0.25,0.14, 0.1])
+
+nav0.page_link("Main.py", label="Home", icon="🏠")
+nav1.page_link("pages/01_EDA_Toolkit.py", label="Data Exploration", icon="🔎")
+nav2.page_link("pages/02_Forecasting.py", label="Forecasting", icon="📈")
+nav3.page_link("pages/02_ML_Toolkit.py", label="Machine Learning", icon="🧠")
+nav4.page_link("pages/04_LLM_Toolkit.py", label="LLM Applications", icon="🤖")
+nav5.page_link("pages/03_MLOps_Toolkit.py", label="MLOps & Deployment", icon="⚙️")
+nav6.page_link("pages/05_Responsable_AI.py", label="AI Safety", icon="🛡️")
+nav7.page_link("pages/07_APIs.py", label="APIs", icon="🌐")
+st.divider()
+    
+    
 st.title("Machine Learning Toolkit")
 #st.caption("Teoría → Código → Mini-demo ejecutable. Basado en scikit-learn, pensado para aprender y reutilizar.")
-
-# ---------- SIDEBAR (always-visible contact + nav) ----------
-with st.sidebar:
-    st.markdown("### 👋 About me")
-    st.write(
-        "Data Scientist with a strong background in **forecasting**, **business intelligence**, and **ML-powered analytics**. "
-        "I specialize in building **end-to-end data products** — from data pipelines and predictive models in **Snowflake/SQL** "
-        "to polished **Streamlit apps** used daily by business teams. "
-        "Passionate about turning raw data into clear, actionable insights that support **strategic decision-making**."
-    )
-
-    st.divider()
-
-    st.page_link("Main.py", label="Home", icon="🏠")
-
-    #!st.markdown("### 📊 Data Science")
-
-    st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="🔎")
-    st.page_link("pages/02_Forecasting.py", label="Forecasting Toolkit", icon="📈")
-
-    #!st.markdown("### 🤖 Machine Learning")
-
-    st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="🧠")
-    st.page_link("pages/04_LLM_Toolkit.py", label="LLM Toolkit", icon="🤖")
-
-    #!st.markdown("### ⚙️ AI Engineering")
-
-    st.page_link("pages/03_MLOps_Toolkit.py", label="MLOps Toolkit", icon="⚙️")
-
-    #!st.markdown("### 🛡️ AI Governance")
-
-    st.page_link("pages/05_Responsable_AI.py", label="Responsible AI Toolkit", icon="🛡️")
-
-    st.divider()
-    st.markdown("**Contact**")
-    st.markdown("- GitHub: [@liliam-mtz](https://github.com/liliammtz)")
-    st.markdown("- LinkedIn: [Liliam Martínez](https://www.linkedin.com/in/liliammtz/)")
-    st.markdown("- Email: [liliammtzfdz@gmail.com](mailto:liliammtzfdz@gmail.com)")
-
-    
-    
-st.info("work in progress")
 
 seed = 42
 
@@ -102,244 +74,824 @@ def download_bytes(content: bytes, filename: str, label: str):
 # =========================
 # Tabs principales (mantengo estructura)
 # =========================
-t0, t1 = st.tabs([
-    "Supervised Learning",
-    "Unsupervised Learning"
-])
+t0, t1, t2, t3, t4 = st.tabs([
+    "🧠 ML Fundamentals",
+    "🎯 Supervised Learning",
+    "🧭 Unsupervised Learning",
+    "⚙️ Model Evaluation & Tuning",
+    "🚀 From Model to Production"
+    ])
 
+with t0:
+    st.subheader("🧠 ML Fundamentals")
+    st.caption("Core concepts to understand how machine learning models learn, generalize, and fail.")
+
+    # =========================
+    # What is ML
+    # =========================
+    st.markdown("""
+    ### 📌 What is Machine Learning?
+
+    **Machine Learning (ML)** is a way to build systems that learn patterns from data  
+    instead of being explicitly programmed with rules.
+
+    **Traditional Programming**
+    - Rules + Data → Output  
+
+    **Machine Learning**
+    - Data + Output → Learns Rules  
+
+    The goal is to learn a function:
+
+    f(x) → y  
+
+    Where:
+    - x = input features  
+    - y = target variable  
+    """)
+
+    st.divider()
+
+    # =========================
+    # Types of ML
+    # =========================
+    st.markdown("""
+    ### 🧩 Types of Machine Learning
+
+    **🎯 Supervised Learning**
+    - Data includes labels (target variable y)  
+    - Goal: predict outputs  
+
+    Examples:
+    - Classification → spam vs not spam  
+    - Regression → price prediction  
+
+    ---
+    **🧭 Unsupervised Learning**
+    - No labels  
+    - Goal: find structure or patterns  
+
+    Examples:
+    - Clustering → customer segmentation  
+    - Dimensionality reduction → PCA  
+
+    ---
+    **🔄 Other paradigms (high-level)**
+    - Semi-supervised learning  
+    - Reinforcement learning  
+    """)
+
+    st.divider()
+
+    # =========================
+    # Bias vs Variance
+    # =========================
+    st.markdown("""
+    ### ⚖️ Bias vs Variance Tradeoff
+
+    **Bias**
+    - Error due to overly simple assumptions  
+    - Model underfits  
+    - Misses real patterns  
+
+    **Variance**
+    - Error due to sensitivity to data  
+    - Model overfits  
+    - Learns noise instead of signal  
+
+    ---
+    **Goal:** balance both to minimize total error
+
+    Error = Bias² + Variance + Noise  
+
+    - High Bias → too simple  
+    - High Variance → too complex  
+    """)
+
+    st.divider()
+
+    # =========================
+    # Overfitting vs Underfitting
+    # =========================
+    st.markdown("""
+    ### 📉 Overfitting vs Underfitting
+
+    **Underfitting**
+    - Model too simple  
+    - Poor performance on both train and test  
+
+    **Overfitting**
+    - Model memorizes training data  
+    - Good train performance, poor test performance  
+
+    ---
+    **How to detect**
+    - Train ↓ and Test ↑ → overfitting  
+    - Both high → underfitting  
+
+    ---
+    **How to fix**
+
+    Underfitting:
+    - Increase model complexity  
+    - Add better features  
+
+    Overfitting:
+    - Regularization  
+    - More data  
+    - Cross-validation  
+    """)
+
+    st.divider()
+
+    # =========================
+    # Generalization
+    # =========================
+    st.markdown("""
+    ### 🧠 Generalization
+
+    The ultimate goal of ML is:
+
+    → Perform well on **unseen data**
+
+    ---
+    **Train / Validation / Test**
+    - Train → learn patterns  
+    - Validation → tune model  
+    - Test → final evaluation  
+
+    ---
+    **Cross-validation**
+    - More robust performance estimate  
+    - Reduces variance in evaluation  
+
+    ---
+    **⚠️ Data Leakage**
+    - Using future or hidden information  
+    - Leads to unrealistic performance  
+
+    ---
+    **Best practices**
+    - Always separate datasets properly  
+    - Use pipelines  
+    - Track experiments  
+    """)
 # ============================================================
 # 1) SUPERVISED
 # ============================================================
-with t0:
+with t1:
     st.subheader("🎯 Supervised Learning")
-    st.caption("Predicción con variable objetivo etiquetada (y). Clasificación (y discreta) y regresión (y continua).")
+    st.caption("Predictive modeling with labeled data. Focus on model selection, evaluation, and real-world decision making.")
 
-    colL, colR = st.columns([1.1, 1])
-    with colL:
+    # =========================
+    # Tabs
+    # =========================
+    s1, s2, s3, s4 = st.tabs([
+        "🧠 How to Choose a Model",
+        "🧩 Classification",
+        "📈 Regression",
+        "🧪 Live Demo"
+    ])
+
+    # =========================
+    # 🧠 MODEL SELECTION
+    # =========================
+    with s1:
         st.markdown("""
-**Flujo conceptual**
-1) Define objetivo (**target**) y **métrica primaria** (éxito ≠ 100% accuracy).  
-2) **Train/Test** (+ **CV** si aplica).  
-3) Preprocesa con **Pipeline**/**ColumnTransformer** (num: escalado; cat: one-hot).  
-4) Entrena **modelos base** con la misma métrica y CV.  
-5) Elige finalista, **tunea hiperparámetros**, evalúa en **test**.  
-6) **Interpreta y documenta**: errores, supuestos, límites, próximos pasos.
-""")
-        st.markdown("—")
+        ### 🧠 How to Choose the Right Model
 
-        st.markdown("### 🧩 Clasificación (teoría)")
+        Choosing a model is NOT about using the most complex algorithm.  
+        It’s about aligning the model with:
+        - the **data**
+        - the **problem**
+        - the **business constraints**
+        """)
+
+        st.divider()
+
         st.markdown("""
-- **Modelos**: Logistic Regression, SVM, kNN, Árboles, Random Forest, Gradient Boosting.  
-- **Métricas**: Accuracy (cuidado con desbalance), Precision/Recall/F1, ROC-AUC (binario), PR-AUC (desbalance extremo).  
-- **Umbral**: Ajusta threshold según costo FP/FN; **calibración** si necesitas probabilidades reales.  
-- **Desbalance**: `class_weight='balanced'`, split estratificado, o re-muestreo (SMOTE).
-""")
+        ### 🔑 Step 1 — Identify the problem type
 
-        st.code(
-                """# Pipeline de clasificación + CV (esqueleto)
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.pipeline import Pipeline
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import StratifiedKFold, cross_validate
+        - **Classification** → predict categories  
+        - **Regression** → predict continuous values  
+        """)
 
-pre = ColumnTransformer([
-    ("num", StandardScaler(), num_cols),
-    ("cat", OneHotEncoder(handle_unknown="ignore"), cat_cols),
-])
+        st.divider()
 
-pipe = Pipeline([
-    ("pre", pre),
-    ("model", LogisticRegression(max_iter=1000))
-])
-
-cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-scoring = {"accuracy":"accuracy", "f1":"f1", "auc":"roc_auc"}
-res = cross_validate(pipe, X, y, scoring=scoring, cv=cv, n_jobs=-1)
-""", language="python")
-
-        st.code(
-                """# GridSearchCV — tuning rápido
-from sklearn.model_selection import GridSearchCV
-
-param_grid = {
-    "model__C": [0.01, 0.1, 1, 10],
-    "model__solver": ["lbfgs", "liblinear"]
-}
-gs = GridSearchCV(pipe, param_grid=param_grid, scoring="roc_auc", cv=cv, n_jobs=-1)
-# gs.fit(X, y); gs.best_params_, gs.best_score_
-""", language="python")
-
-    with colR:
-        st.markdown("### ▶️ Mini-demo: Clasificación (Breast Cancer)")
-        run_cls = st.toggle("Ejecutar demo de clasificación", value=False, key="run_cls")
-        if run_cls:
-            X, y = load_data_classification()
-            num_cols = X.columns.tolist()
-            pre = ColumnTransformer([("num", StandardScaler(), num_cols)])
-            pipe = Pipeline([("pre", pre), ("model", LogisticRegression(max_iter=1000, class_weight="balanced", random_state=seed))])
-
-            Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, stratify=y, random_state=seed)
-            pipe.fit(Xtr, ytr)
-            proba = pipe.predict_proba(Xte)[:, 1]
-            ypred = (proba >= 0.5).astype(int)
-
-            c1, c2, c3 = st.columns(3)
-            with c1: st.metric("Accuracy", f"{accuracy_score(yte, ypred):.3f}")
-            with c2: st.metric("F1", f"{f1_score(yte, ypred):.3f}")
-            with c3: st.metric("ROC-AUC", f"{roc_auc_score(yte, proba):.3f}")
-
-            st.markdown("**Matriz de confusión**")
-            render_confusion_matrix(yte, ypred)
-
-    st.markdown("---")
-    colL2, colR2 = st.columns([1.1, 1])
-
-    with colL2:
-        st.markdown("### 📈 Regresión (teoría)")
         st.markdown("""
-- **Modelos**: Linear/Ridge/Lasso/ElasticNet, Random Forest Regressor, Gradient Boosting.  
-- **Métricas**: MAE (robusto), RMSE (penaliza grandes errores), R² (ojo con sobreajuste).  
-- **Residuos**: inspecciona no linealidad y heterocedasticidad.  
-- **Regularización**: estandariza antes de L1/L2.
-""")
-        st.code(
-                """# RidgeCV + preprocesamiento
-from sklearn.linear_model import RidgeCV
-from sklearn.model_selection import KFold, cross_validate
+        ### 🔑 Step 2 — Understand your data
 
-pre = ColumnTransformer([("num", StandardScaler(), num_cols)])
-ridge = Pipeline([("pre", pre), ("model", RidgeCV(alphas=np.logspace(-3,3,30)))])
-cv = KFold(n_splits=5, shuffle=True, random_state=42)
-scoring = {"MAE":"neg_mean_absolute_error", "RMSE":"neg_root_mean_squared_error", "R2":"r2"}
-# res = cross_validate(ridge, X, y, scoring=scoring, cv=cv, n_jobs=-1)
-""", language="python")
+        Ask yourself:
 
-    with colR2:
-        st.markdown("### ▶️ Mini-demo: Regresión (California Housing)")
-        run_reg = st.toggle("Ejecutar demo de regresión", value=False, key="run_reg")
-        if run_reg:
-            X, y = load_data_regression()
-            num_cols = X.columns.tolist()
-            pre = ColumnTransformer([("num", StandardScaler(), num_cols)])
-            ridge = Pipeline([("pre", pre), ("model", RidgeCV(alphas=np.logspace(-3,3,30)))])
+        - How many rows do I have?
+        - Are relationships linear or complex?
+        - Do I have many features?
+        - Are there missing values?
+        - Is the dataset imbalanced?
 
-            Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, random_state=seed)
-            ridge.fit(Xtr, ytr)
-            yhat = ridge.predict(Xte)
+        ---
+        **Rules of thumb:**
 
-            mae = mean_absolute_error(yte, yhat)
-            rmse = np.sqrt(mean_squared_error(yte, yhat))
-            r2 = r2_score(yte, yhat)
+        - Small dataset → simpler models (Logistic, Linear)  
+        - Large dataset → tree-based / boosting  
+        - Many features → regularization (Lasso/Ridge)  
+        - Non-linear patterns → trees / boosting  
+        """)
 
-            c1, c2, c3 = st.columns(3)
-            with c1: st.metric("MAE", f"{mae:.3f}")
-            with c2: st.metric("RMSE", f"{rmse:.3f}")
-            with c3: st.metric("R²", f"{r2:.3f}")
+        st.divider()
 
-            fig, ax = plt.subplots()
-            ax.scatter(yte, yhat, s=8)
-            ax.plot([yte.min(), yte.max()], [yte.min(), yte.max()])
-            ax.set_xlabel("y true"); ax.set_ylabel("y pred")
-            ax.set_title("Predicho vs Real")
-            st.pyplot(fig)
+        st.markdown("""
+        ### 🔑 Step 3 — Start simple (baseline first)
 
-    st.markdown("---")
-    st.subheader("📋 Checklist final (antes de producción)")
-    st.markdown("""
-- Target claro, métrica primaria y costo de errores.  
-- Pipeline reproducible (sin leakage) + CV apropiada.  
-- Umbral ajustado al negocio; calibración si necesitas probabilidades.  
-- Desbalance tratado y métricas por clase.  
-- Regularización / early stopping según modelo.  
-- Registro de semillas, versiones y parámetros.  
-- Documentación: cómo usar, límites y próximos pasos.
-""")
+        Always begin with:
 
+        - Logistic Regression (classification)
+        - Linear / Ridge (regression)
+
+        Why?
+        - Fast
+        - Interpretable
+        - Strong baseline
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### 🔑 Step 4 — Increase complexity if needed
+
+        Move to more powerful models when:
+
+        - Performance is low
+        - Relationships are non-linear
+
+        Options:
+        - Random Forest
+        - Gradient Boosting (XGBoost, LightGBM)
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### 🔑 Step 5 — Consider constraints (THIS IS SENIOR LEVEL)
+
+        Choose based on:
+
+        - ⚡ Speed (real-time vs batch)
+        - 🔍 Interpretability (business needs)
+        - 📦 Deployment complexity
+        - 💰 Cost of errors
+
+        ---
+        Example:
+
+        - Credit risk → interpretable (Logistic)  
+        - Recommendations → complex (Boosting)  
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### 🧭 Quick Decision Guide
+
+        | Situation | Recommended Model |
+        |----------|------------------|
+        | Simple baseline | Logistic / Linear |
+        | Tabular data (most cases) | Random Forest / XGBoost |
+        | Small dataset | Logistic / Ridge |
+        | High interpretability needed | Linear / Logistic |
+        | Complex patterns | Gradient Boosting |
+        """)
+
+    # =========================
+    # 🧩 CLASSIFICATION
+    # =========================
+    with s2:
+        st.markdown("""
+        ### 🧩 Classification
+
+        Predict discrete labels (0/1, categories).
+
+        ---
+        ### 🔑 Common Models
+
+        - Logistic Regression → baseline, interpretable  
+        - Random Forest → robust, handles non-linearity  
+        - Gradient Boosting → best performance in tabular data  
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### 📏 Metrics
+
+        - Accuracy → only if balanced  
+        - Precision → minimize false positives  
+        - Recall → minimize false negatives  
+        - F1-score → balance  
+        - ROC-AUC → ranking quality  
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### ⚠️ Important Concepts
+
+        - Threshold tuning (not always 0.5)  
+        - Class imbalance handling  
+        - Probability calibration  
+        """)
+
+    # =========================
+    # 📈 REGRESSION
+    # =========================
+    with s3:
+        st.markdown("""
+        ### 📈 Regression
+
+        Predict continuous values.
+
+        ---
+        ### 🔑 Common Models
+
+        - Linear Regression → simple baseline  
+        - Ridge / Lasso → regularized models  
+        - Random Forest → non-linear patterns  
+        - Gradient Boosting → high performance  
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### 📏 Metrics
+
+        - MAE → robust to outliers  
+        - RMSE → penalizes large errors  
+        - R² → explanatory power  
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### ⚠️ Diagnostics
+
+        - Residual analysis  
+        - Non-linearity  
+        - Heteroscedasticity  
+        """)
+
+    # =========================
+    # 🧪 DEMO
+    # =========================
+    with s4:
+        st.markdown("### 🧪 Live Demo")
+
+        run_demo = st.toggle("Run classification demo", value=False)
+
+        if run_demo:
+            from sklearn.datasets import load_breast_cancer
+            from sklearn.model_selection import train_test_split
+            from sklearn.linear_model import LogisticRegression
+            from sklearn.metrics import accuracy_score
+
+            X, y = load_breast_cancer(return_X_y=True)
+
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+            model = LogisticRegression(max_iter=1000)
+            model.fit(X_train, y_train)
+
+            preds = model.predict(X_test)
+
+            st.metric("Accuracy", round(accuracy_score(y_test, preds), 3))
+            
 # ============================================================
 # 2) UNSUPERVISED
 # ============================================================
-with t1:
+with t2:
     st.subheader("🧭 Unsupervised Learning")
-    st.caption("Estructura sin etiquetas: agrupación, reducción, visualización, partes interpretables.")
+    st.caption("Discover patterns, structure, and hidden relationships in data without labeled outcomes.")
 
-    colUL, colUR = st.columns([1.1, 1])
+    # =========================
+    # Tabs
+    # =========================
+    u1, u2, u3, u4 = st.tabs([
+        "🧠 When to Use It",
+        "🔍 Clustering",
+        "📉 Dimensionality Reduction",
+        "🧪 Live Demo"
+    ])
 
-    with colUL:
-        st.markdown("### 1) Clustering (teoría)")
+    # =========================
+    # 🧠 WHEN TO USE IT
+    # =========================
+    with u1:
         st.markdown("""
-- **KMeans**: minimiza distancia a centroides (escalar numéricas).  
-- Elegir **k**: Codo, **Silhouette**, estabilidad.  
-- Métricas internas: Silhouette (↑ mejor), Davies-Bouldin (↓), Calinski-Harabasz (↑).  
-- Inspección: tamaños, centroides, perfiles medios por variable.
-""")
-        st.code(
-                """# KMeans + escalado + selección de k (silhouette)
-from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
+        ### 🧠 When to Use Unsupervised Learning
 
-X_scaled = StandardScaler().fit_transform(X)
-scores = {k: silhouette_score(X_scaled, KMeans(k, n_init="auto", random_state=42).fit_predict(X_scaled))
-          for k in range(2, 11)}
-k_star = max(scores, key=scores.get)
-labels = KMeans(k_star, n_init="auto", random_state=42).fit_predict(X_scaled)
-""", language="python")
+        Use unsupervised learning when:
+        - You **don’t have labels**
+        - You want to **explore structure**
+        - You need **segmentation or grouping**
+        """)
 
-        st.markdown("### 2) Reducción de Dimensión (PCA)")
+        st.divider()
+
         st.markdown("""
-- **PCA** para decorrelacionar y comprimir manteniendo varianza.  
-- Decide PCs por varianza acumulada (p.ej., 90–95%).  
-- Útil antes de clustering/visualización.
-""")
-        st.code(
-                """# PCA conservando 95% varianza
-from sklearn.decomposition import PCA
-pca = PCA(n_components=0.95, svd_solver="full", random_state=42)
-X_p = pca.fit_transform(X_scaled)
-explained = pca.explained_variance_ratio_.cumsum()
-""", language="python")
+        ### 🔑 Common Use Cases
 
-        st.markdown("### 3) Partes interpretables (NMF)")
+        - Customer segmentation  
+        - Fraud / anomaly detection  
+        - Feature engineering  
+        - Data compression  
+        """)
+
+        st.divider()
+
         st.markdown("""
-- **NMF** en datos no negativos: X ≈ W·H → **temas/partes**.  
-- En texto: TF-IDF + NMF para tópicos interpretables.
-""")
-        st.code(
-                """# NMF sobre matriz no negativa (ej. TF-IDF)
-from sklearn.decomposition import NMF
-nmf = NMF(n_components=10, init="nndsvda", random_state=42, max_iter=1000)
-W = nmf.fit_transform(X_nonneg)
-H = nmf.components_
-# top términos por componente: np.argsort(-H[i])[:10]
-""", language="python")
+        ### ⚠️ Key Difference vs Supervised
 
-    with colUR:
-        st.markdown("### ▶️ Mini-demo: Clustering (Iris) + PCA 2D")
-        run_cluster = st.toggle("Ejecutar demo de clustering", value=False, key="run_cluster")
-        if run_cluster:
-            X, y = load_data_clustering()
+        - No “correct answer”  
+        - Evaluation is **harder and more subjective**  
+        - Interpretation is critical  
+        """)
+
+    # =========================
+    # 🔍 CLUSTERING
+    # =========================
+    with u2:
+        st.markdown("""
+        ### 🔍 Clustering
+
+        Group similar observations together.
+
+        ---
+        ### 🔑 Most Common Model
+
+        **KMeans**
+        - Groups data into k clusters  
+        - Minimizes distance to centroids  
+
+        ---
+        ### ⚠️ Important Requirements
+
+        - Scale your data (VERY important)  
+        - Choose the right number of clusters (k)  
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### 🧠 How to Choose K
+
+        - Elbow Method → diminishing returns  
+        - Silhouette Score → cluster quality  
+        - Business interpretability (MOST IMPORTANT)  
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### 📏 Evaluation
+
+        - Silhouette Score → higher is better  
+        - Cluster size balance  
+        - Separation vs overlap  
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### 🎯 Interpretation (THIS IS WHAT MATTERS)
+
+        After clustering, always ask:
+
+        - What defines each cluster?  
+        - How are they different?  
+        - Are they useful for the business?  
+
+        Example:
+        - Cluster 1 → high spend customers  
+        - Cluster 2 → low engagement  
+        """)
+
+    # =========================
+    # 📉 DIMENSIONALITY REDUCTION
+    # =========================
+    with u3:
+        st.markdown("""
+        ### 📉 Dimensionality Reduction
+
+        Reduce the number of features while preserving information.
+
+        ---
+        ### 🔑 PCA (Principal Component Analysis)
+
+        - Transforms data into new components  
+        - Each component captures variance  
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### 🧠 Why Use PCA?
+
+        - Visualization (2D / 3D plots)  
+        - Remove noise  
+        - Speed up models  
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### ⚠️ Key Concepts
+
+        - PC1 explains the most variance  
+        - PC2 explains the second most  
+        - Components are linear combinations of features  
+        """)
+
+        st.divider()
+
+        st.markdown("""
+        ### 📏 Interpretation
+
+        - Look at explained variance  
+        - Analyze feature loadings  
+        - Identify clusters visually  
+        """)
+
+    # =========================
+    # 🧪 DEMO
+    # =========================
+    with u4:
+        st.markdown("### 🧪 Live Demo — Clustering + PCA")
+
+        run_demo = st.toggle("Run clustering demo", value=False)
+
+        if run_demo:
+            from sklearn.datasets import load_iris
+            from sklearn.preprocessing import StandardScaler
+            from sklearn.cluster import KMeans
+            from sklearn.decomposition import PCA
+            from sklearn.metrics import silhouette_score
+            import matplotlib.pyplot as plt
+
+            X, _ = load_iris(return_X_y=True)
+
             scaler = StandardScaler()
-            Xs = scaler.fit_transform(X)
+            X_scaled = scaler.fit_transform(X)
 
-            k = st.slider("k (clusters)", 2, 8, 3, 1)
-            km = KMeans(n_clusters=k, n_init="auto", random_state=seed)
-            labels = km.fit_predict(Xs)
-            sil = silhouette_score(Xs, labels)
+            k = st.slider("Number of clusters (k)", 2, 8, 3)
 
-            pca = PCA(n_components=2, random_state=seed)
-            X2 = pca.fit_transform(Xs)
-            df_plot = pd.DataFrame({"PC1": X2[:,0], "PC2": X2[:,1], "cluster": labels})
+            model = KMeans(n_clusters=k, random_state=42)
+            labels = model.fit_predict(X_scaled)
 
-            c1, c2 = st.columns(2)
-            with c1:
-                st.metric("Silhouette", f"{sil:.3f}")
-                st.write("Centroides (en espacio estandarizado):")
-                st.dataframe(pd.DataFrame(km.cluster_centers_, columns=X.columns))
-            with c2:
-                fig, ax = plt.subplots()
-                scatter = ax.scatter(df_plot["PC1"], df_plot["PC2"], c=df_plot["cluster"])
-                ax.set_title("Clusters en PCA 2D")
-                ax.set_xlabel("PC1"); ax.set_ylabel("PC2")
-                st.pyplot(fig)
+            score = silhouette_score(X_scaled, labels)
+            st.metric("Silhouette Score", round(score, 3))
 
+            # PCA visualization
+            pca = PCA(n_components=2)
+            X_pca = pca.fit_transform(X_scaled)
+
+            fig, ax = plt.subplots()
+            ax.scatter(X_pca[:, 0], X_pca[:, 1], c=labels)
+            ax.set_title("Clusters in PCA space")
+            st.pyplot(fig)
+            
+with t3:
+    st.subheader("⚙️ Model Evaluation & Tuning")
+    st.caption("Evaluate models correctly, avoid common pitfalls, and optimize performance for real-world scenarios.")
+
+    # =========================
+    # Tabs
+    # =========================
+    e1, e2, e3, e4 = st.tabs([
+        "📏 Metrics",
+        "🔁 Cross-Validation",
+        "🎯 Threshold & Imbalance",
+        "🔧 Hyperparameter Tuning"
+    ])
+
+    # =========================
+    # 📏 METRICS
+    # =========================
+    with e1:
+        st.markdown("""
+        ### 📏 Choosing the Right Metric
+
+        The metric defines what “good” means.
+
+        ---
+        ### 🎯 Classification Metrics
+
+        - **Accuracy**
+            - Good only if classes are balanced  
+
+        - **Precision**
+            - When false positives are costly  
+
+        - **Recall**
+            - When false negatives are costly  
+
+        - **F1-score**
+            - Balance between precision & recall  
+
+        - **ROC-AUC**
+            - Measures ranking quality  
+
+        ---
+        ### 📈 Regression Metrics
+
+        - **MAE**
+            - Robust to outliers  
+
+        - **RMSE**
+            - Penalizes large errors  
+
+        - **R²**
+            - Explains variance (use carefully)  
+
+        ---
+        ### ⚠️ Key Insight
+
+        The best model depends on the **business objective**, not the highest score.
+        """)
+
+    # =========================
+    # 🔁 CROSS VALIDATION
+    # =========================
+    with e2:
+        st.markdown("""
+        ### 🔁 Cross-Validation
+
+        Single train/test splits are unstable.
+
+        ---
+        ### 🧠 Why use Cross-Validation?
+
+        - Reduces variance in evaluation  
+        - Uses data more efficiently  
+        - Provides more reliable estimates  
+
+        ---
+        ### 🔑 Types
+
+        - **K-Fold**
+        - **Stratified K-Fold** (classification)
+        - **Time-based splits** (time series)
+
+        ---
+        ### ⚠️ Common Mistake
+
+        Data leakage:
+        - Scaling BEFORE split ❌  
+        - Using future data ❌  
+
+        Always use:
+        - Pipelines  
+        """)
+
+        st.code("""
+from sklearn.model_selection import cross_validate, StratifiedKFold
+
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+scores = cross_validate(model, X, y, cv=cv, scoring=["accuracy", "f1"])
+""", language="python")
+
+    # =========================
+    # 🎯 THRESHOLD & IMBALANCE
+    # =========================
+    with e3:
+        st.markdown("""
+        ### 🎯 Threshold & Class Imbalance
+
+        Default threshold = 0.5 → NOT always optimal
+
+        ---
+        ### 🔑 Threshold Tuning
+
+        Adjust threshold depending on:
+
+        - Business cost  
+        - Risk tolerance  
+
+        Example:
+        - Fraud detection → lower threshold (catch more cases)  
+
+        ---
+        ### ⚠️ Class Imbalance
+
+        Problem:
+        - Model predicts majority class only  
+
+        Solutions:
+        - `class_weight='balanced'`  
+        - Oversampling (SMOTE)  
+        - Undersampling  
+        - Use better metrics (F1, ROC-AUC)  
+        """)
+
+    # =========================
+    # 🔧 HYPERPARAMETER TUNING
+    # =========================
+    with e4:
+        st.markdown("""
+        ### 🔧 Hyperparameter Tuning
+
+        Models have parameters that must be optimized.
+
+        ---
+        ### 🔑 Methods
+
+        - **Grid Search**
+            - Exhaustive  
+            - Expensive  
+
+        - **Random Search**
+            - Faster  
+            - Often good enough  
+
+        ---
+        ### 🧠 Best Practice
+
+        - Start simple  
+        - Tune only important parameters  
+        - Use cross-validation  
+
+        ---
+        ### ⚠️ Common Mistakes
+
+        - Over-tuning → overfitting  
+        - Not using CV  
+        - Ignoring runtime cost  
+        """)
+
+        st.code("""
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {
+    "model__max_depth": [3, 5, 10],
+    "model__n_estimators": [100, 200]
+}
+
+grid = GridSearchCV(model, param_grid, cv=5)
+grid.fit(X, y)
+""", language="python")
+        
+with t4:
+    st.subheader("🚀 From Model to Production")
+    st.caption("How models move from experimentation to real-world systems.")
+
+    st.markdown("""
+    ### 🧠 The Reality of Machine Learning
+
+    Building a model is only ~20% of the work.
+
+    The real challenge is:
+    - Making it reproducible  
+    - Deploying it  
+    - Monitoring it  
+    """)
+
+    st.divider()
+
+    st.markdown("""
+    ### 🔄 ML Lifecycle
+
+    1. Data collection (APIs, databases)  
+    2. Data preprocessing  
+    3. Model training  
+    4. Evaluation & validation  
+    5. Deployment (API / batch)  
+    6. Monitoring (performance, drift)  
+    """)
+
+    st.divider()
+
+    st.markdown("""
+    ### ⚠️ Common Production Challenges
+
+    - Data drift  
+    - Concept drift  
+    - Latency constraints  
+    - Model degradation over time  
+    """)
+
+    st.divider()
+
+    st.markdown("""
+    ### 🔑 Best Practices
+
+    - Use pipelines (no leakage)  
+    - Version everything (data, model, code)  
+    - Monitor metrics in production  
+    - Retrain periodically  
+    """)
+
+    st.divider()
+
+    st.info("""
+    👉 For full implementation (deployment, pipelines, monitoring),
+    see the **MLOps & Deployment** section.
+    """)

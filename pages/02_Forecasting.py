@@ -4,44 +4,17 @@ import pandas as pd
 
 st.set_page_config(page_title="Forecasting Toolkit", layout="wide")
 
-# ---------- SIDEBAR (always-visible contact + nav) ----------
-with st.sidebar:
-    st.markdown("### 👋 About me")
-    st.write(
-        "Data Scientist with a strong background in **forecasting**, **business intelligence**, and **ML-powered analytics**. "
-        "I specialize in building **end-to-end data products** — from data pipelines and predictive models in **Snowflake/SQL** "
-        "to polished **Streamlit apps** used daily by business teams. "
-        "Passionate about turning raw data into clear, actionable insights that support **strategic decision-making**."
-    )
+nav0, nav1, nav2, nav3, nav4, nav5, nav6, nav7 = st.columns([0.12,0.21,0.16,0.22,0.21,0.25,0.14, 0.1])
 
-    st.divider()
-
-    st.page_link("Main.py", label="Home", icon="🏠")
-
-    #!st.markdown("### 📊 Data Science")
-
-    st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="🔎")
-    st.page_link("pages/02_Forecasting.py", label="Forecasting Toolkit", icon="📈")
-
-    #!st.markdown("### 🤖 Machine Learning")
-
-    st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="🧠")
-    st.page_link("pages/04_LLM_Toolkit.py", label="LLM Toolkit", icon="🤖")
-
-    #!st.markdown("### ⚙️ AI Engineering")
-
-    st.page_link("pages/03_MLOps_Toolkit.py", label="MLOps Toolkit", icon="⚙️")
-
-    #!st.markdown("### 🛡️ AI Governance")
-
-    st.page_link("pages/05_Responsable_AI.py", label="Responsible AI Toolkit", icon="🛡️")
-
-    st.divider()
-    st.markdown("**Contact**")
-    st.markdown("- GitHub: [@liliam-mtz](https://github.com/liliammtz)")
-    st.markdown("- LinkedIn: [Liliam Martínez](https://www.linkedin.com/in/liliammtz/)")
-    st.markdown("- Email: [liliammtzfdz@gmail.com](mailto:liliammtzfdz@gmail.com)")
-
+nav0.page_link("Main.py", label="Home", icon="🏠")
+nav1.page_link("pages/01_EDA_Toolkit.py", label="Data Exploration", icon="🔎")
+nav2.page_link("pages/02_Forecasting.py", label="Forecasting", icon="📈")
+nav3.page_link("pages/02_ML_Toolkit.py", label="Machine Learning", icon="🧠")
+nav4.page_link("pages/04_LLM_Toolkit.py", label="LLM Applications", icon="🤖")
+nav5.page_link("pages/03_MLOps_Toolkit.py", label="MLOps & Deployment", icon="⚙️")
+nav6.page_link("pages/05_Responsable_AI.py", label="AI Safety", icon="🛡️")
+nav7.page_link("pages/07_APIs.py", label="APIs", icon="🌐")
+st.divider()
     
 st.title("⚙️ Forecasting Toolkit")
 st.caption("An interactive guide to learn from scratch what forecasting is and how to apply it using python.")

@@ -1,275 +1,279 @@
-from datetime import date
 import streamlit as st
 
-# ---------- BASIC PAGE CONFIG ----------
-st.set_page_config(
-    page_title="Liliam Martínez · Data Scientist Portfolio",
-    page_icon="✨",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
+st.set_page_config(layout="wide")
+
+# ---------- COLOR SYSTEM ----------
+PRIMARY = "#F4B740"        # amarillo (accent)
+PRIMARY_HOVER = "#D89B20"
+
+PURPLE_DARK = "#3F3D56"   # base elegante
+PURPLE_SOFT = "#6C63FF"   # accent secundario
+
+BG = "#F7F7FB"            # 👈 CAMBIO CLAVE (ya no blanco puro)
+CARD_BG = "#FFFFFF"
+
+TEXT = "#1F2933"
+TEXT_SOFT = "#6B7280"
+BORDER = "#E5E7EB"
 
 # ---------- STYLES ----------
-PRIMARY = "#c97a9e"   # acento rosa elegante
-BG_SOFT = "#ffffff"   # fondo limpio blanco
-CARD_BG = "#f8f0f4"   # fondo de tarjetas en rosa muy claro
-TEXT_SOFT = "#5a5a66" # gris suave para texto secundario
+st.markdown(f"""
+<style>
 
+/* Layout */
+.block-container {{
+    max-width: 1100px;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    background-color: {BG};
+}}
 
-st.markdown(
-    f"""
-    <style>
-    /* Hide Streamlit default menu/footer */
-    #MainMenu {{visibility: hidden;}}
-    footer {{visibility: hidden;}}
+/* Hide Streamlit UI */
+#MainMenu {{visibility: hidden;}}
+footer {{visibility: hidden;}}
 
-    /* Page padding + max width */
-    .block-container {{
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        max-width: 1200px;
-    }}
+/* HERO */
+.hero-title {{
+    font-size: 3rem;
+    font-weight: 700;
+    color: {PURPLE_DARK};
+    letter-spacing: -0.5px;
+}}
 
-    /* Hero */
-    .hero h1 {{
-        font-size: 3rem;
-        line-height: 1.1;
-        margin-bottom: .2rem;
-    }}
-    .hero p.sub {{
-        color: {TEXT_SOFT};
-        font-size: 1.1rem;
-        margin-top: .2rem;
-    }}
+.hero-sub {{
+    font-size: 1.2rem;
+    color: {TEXT_SOFT};
+    margin-bottom: 1.5rem;
+}}
 
-    /* Soft badge */
-    .badge {{
-        display:inline-block; padding:.25rem .6rem; border-radius:999px; 
-        background:linear-gradient(90deg, {PRIMARY}22, {PRIMARY}44);
-        border:1px solid {PRIMARY}55; color:#2c2c34; font-size:.85rem; margin-right:.35rem;
-        font-weight:500;
-    }}
+/* SECTION SPACING */
+section {{
+    margin-bottom: 2.5rem;
+}}
 
-    /* Card */
-    .card {{
-        background: {CARD_BG}; border:1px solid #e5c6d5; border-radius: 18px;
-        padding: 1.2rem 1.2rem; margin-bottom: 1rem; box-shadow: 0 6px 18px #d46a9220;
-    }}
-    .card h3 {{margin: 0 0 .2rem 0; color:#2c2c34;}}
-    .card p {{margin: .3rem 0 .8rem 0; color:{TEXT_SOFT};}}
+/* CARD (ELEVATED) */
+.card {{
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid {BORDER};
+    background-color: {CARD_BG};
+    margin-bottom: 1rem;
 
-    /* Button links */
-    .linkrow a {{
-        text-decoration:none; border:1px solid {PRIMARY}; background:{PRIMARY}; color:white; 
-        padding:.55rem .8rem; border-radius: 12px; margin-right: .5rem; display:inline-block;
-        font-weight:500;
-    }}
-    .linkrow a:hover {{background:#c1577e;}}
+    /* 👇 profundidad */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
 
-    /* Skills chips */
-    .chips span {{
-        display:inline-block; padding:.35rem .6rem; border-radius:999px; border:1px solid #e5c6d5; 
-        margin:.2rem; color:#2c2c34; font-size:.9rem; background:#fff0f6;
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+    /* 👇 acento más visible */
+    border-top: 3px solid {PURPLE_SOFT};
 
-st.markdown(
-    f"""
-    <style>
-    /* --- Botones dentro de la card --- */
-    .card .actions {{
-        margin-top: .6rem;
-        display: flex;
-        gap: .5rem;
-        align-items: center;
-        justify-content: flex-start; /* izquierda */
-        flex-wrap: wrap;
-    }}
-    .btn {{
-        display: inline-block;
-        padding: .55rem .9rem;
-        border-radius: 12px;
-        border: 1px solid {PRIMARY};
-        background: {PRIMARY};
-        color: white !important;
-        text-decoration: none !important;
-        font-weight: 600;
-        font-size: .9rem;
-        box-shadow: 0 2px 6px #d46a9240;
-        cursor: pointer;
-    }}
-    .btn:hover {{ background: #c1577e; border-color: #c1577e; }}
-    .btn.ghost {{
-        background: transparent;
-        color: {PRIMARY} !important;
-        border-color: {PRIMARY};
-    }}
-    .btn.ghost:hover {{
-        background: {PRIMARY}15;
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+    transition: all 0.2s ease;
+}}
 
+.card:hover {{
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}}
 
-# ---------- SIDEBAR (always-visible contact + nav) ----------
-with st.sidebar:
-    st.markdown("### 👋 About me")
-    st.write(
-        "Data Scientist with a strong background in **forecasting**, **business intelligence**, and **ML-powered analytics**. "
-        "I specialize in building **end-to-end data products** — from data pipelines and predictive models in **Snowflake/SQL** "
-        "to polished **Streamlit apps** used daily by business teams. "
-        "Passionate about turning raw data into clear, actionable insights that support **strategic decision-making**."
-    )
+.card h3, .card h4 {{
+    margin-bottom: .4rem;
+    color: {TEXT};
+}}
 
-    st.divider()
+.card p {{
+    margin: .4rem 0 .8rem 0;
+    color: {TEXT_SOFT};
+}}
 
-    st.page_link("Main.py", label="Home", icon="🏠")
+/* BUTTONS */
+.btn {{
+    display: inline-block;
+    padding: 0.55rem 1.1rem;
+    border-radius: 10px;
+    background-color: {PRIMARY};
+    color: black !important;
+    text-decoration: none;
+    font-weight: 600;
+}}
 
-    #!st.markdown("### 📊 Data Science")
+.btn:hover {{
+    background-color: {PRIMARY_HOVER};
+}}
 
-    st.page_link("pages/01_EDA_Toolkit.py", label="EDA Toolkit", icon="🔎")
-    st.page_link("pages/02_Forecasting.py", label="Forecasting Toolkit", icon="📈")
+.btn.secondary {{
+    background-color: {PURPLE_DARK};
+    color: white !important;
+}}
 
-    #!st.markdown("### 🤖 Machine Learning")
+.btn.secondary:hover {{
+    background-color: #2f2d45;
+}}
 
-    st.page_link("pages/02_ML_Toolkit.py", label="Machine Learning Toolkit", icon="🧠")
-    st.page_link("pages/04_LLM_Toolkit.py", label="LLM Toolkit", icon="🤖")
+/* HEADERS */
+h1, h2, h3 {{
+    color: {TEXT};
+}}
 
-    #!st.markdown("### ⚙️ AI Engineering")
+/* SECTION TITLE CENTER */
+.section-title {{
+    text-align: center;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}}
 
-    st.page_link("pages/03_MLOps_Toolkit.py", label="MLOps Toolkit", icon="⚙️")
+.section-sub {{
+    text-align: center;
+    color: {TEXT_SOFT};
+    max-width: 600px;
+    margin: auto;
+}}
 
-    #!st.markdown("### 🛡️ AI Governance")
-
-    st.page_link("pages/05_Responsable_AI.py", label="Responsible AI Toolkit", icon="🛡️")
-
-    st.divider()
-    st.markdown("**Contact**")
-    st.markdown("- GitHub: [@liliam-mtz](https://github.com/liliammtz)")
-    st.markdown("- LinkedIn: [Liliam Martínez](https://www.linkedin.com/in/liliammtz/)")
-    st.markdown("- Email: [liliammtzfdz@gmail.com](mailto:liliammtzfdz@gmail.com)")
-
-
+</style>
+""", unsafe_allow_html=True)
 # ---------- HERO ----------
-col1, col2 = st.columns([1.4, 1])
+col1, col2 = st.columns([2,1])
+
 with col1:
-    st.markdown('<div class="hero">', unsafe_allow_html=True)
-    st.markdown("### Hi, I’m Liliam ✨")
-    st.markdown("# Data Scientist")
-    #!st.markdown(
-    #!    """
-    #!    I design **clean, fast** data apps and **explainable** ML.  
-    #!    Currently building forecasting and anomaly detection tools in **Snowflake + Streamlit**.
-    #!    """)
-    st.markdown(
-        """
-        <div class="linkrow">
-          <a href="https://github.com/liliammtz" target="_blank">GitHub</a>
-          <a href="https://www.linkedin.com/in/liliammtz/" target="_blank">LinkedIn</a>
-          <a href="mailto:liliammtzfdz@gmail.com" target="_blank">Email</a>
-          <a href="https://www.datacamp.com/portfolio/liliammtzfdz" target="_blank">DataCamp</a>
-          <a href="https://graphacademy.neo4j.com/u/3f4f094d-5ac2-44e0-b98a-7b9d8c2c6079/" target="_blank">Neo4j</a>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.markdown('<div class="hero-title">Liliam Martínez</div>', unsafe_allow_html=True)
+    st.markdown("### Senior Data Scientist")
+
+    st.markdown(f"""
+<div class="hero-sub">
+I build analytics tools to monitor transaction performance, 
+analyze trends, and support business decision-making through forecasting and data insights.
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown(f"""
+<a class="btn" href="https://www.linkedin.com/in/liliammtz/">Work with me</a>
+<a class="btn secondary" href="https://github.com/liliammtz" target="_blank">GitHub</a>
+""", unsafe_allow_html=True)
 
 with col2:
-    st.write("")
-    st.markdown(
-        f"""
-        <div class="card" style="
-            text-align:center;
-            background:linear-gradient(180deg,#ffffff,{CARD_BG});
-        ">
-            <div class="badge">Available for freelance/consulting</div>
-            <h3 style="color:#2c2c34;">Open to Collaborations</h3>
-            <p style="color:#2c2c34;">Dashboards · Forecasting · E2E data apps</p>
-            <p style="font-size:0.9rem;color:{TEXT_SOFT};">
-                Based in CDMX · Remote friendly
-            </p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.markdown(f"""
+    <div class="card" style="text-align:center;">
+        <h3>Open to Consulting</h3>
+        <p>Dashboards · Forecasting · Data Analytics</p>
+        <p style="font-size:0.9rem;color:{TEXT_SOFT};">
+            CDMX · Remote
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
-# ---------- SKILLS ----------
+# ---------- PROBLEM ----------
+# ---------- PROBLEM ----------
+st.markdown("""
+<div style="text-align:center; margin-top:3rem; margin-bottom:2rem;">
+    <h2 style="margin-bottom:0.5rem;">Why data teams struggle</h2>
+    <p style="color:#6B7280; font-size:1.05rem; max-width:600px; margin:auto;">
+        Even with data available, many teams lack visibility, clarity, and actionable insights.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
-st.subheader("Skills snapshot")
 
-# Definir categorías
-skills = {
-    "Programming & Scripting": ["Python", "Bash", "Matlab"],
-    "Databases": ["SQL Server", "Snowflake", "MongoDB", "Neo4j"],
-    "Tools & Platforms": ["Git", "Office 365", "Google Suite"],
-    "Visualization & BI": ["Streamlit", "Plotly", "Tableau", "Power BI"],
-    "Monitoring & Logs": ["ELK Stack", "Splunk"],
-    "Modeling & Forecasting": ["StatsForecast", "Prophet", "scikit-learn"],
-    "Focus Areas": ["Data Science", "AI", "Big Data", "Business Intelligence", "Statistical Analysis"],
-}
+col1, col2, col3 = st.columns(3)
 
-# Renderizar como tabla
-for category, items in skills.items():
-    left, right = st.columns([1, 3])
-    with left:
-        st.markdown(f"**{category}**")
-    with right:
-        st.markdown(
-            "<div class='chips'>" + "".join([f"<span>{item}</span>" for item in items]) + "</div>",
-            unsafe_allow_html=True,
-        )
+with col1:
+    st.markdown("""
+    <div class="card">
+        <h4>Limited visibility</h4>
+        <p>
+        Data exists across systems, but there’s no clear way to monitor what’s happening in real time.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
+with col2:
+    st.markdown("""
+    <div class="card">
+        <h4>Unreliable forecasts</h4>
+        <p>
+        Forecasts are often static, hard to interpret, and not aligned with actual business behavior.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+    <div class="card">
+        <h4>Reactive decisions</h4>
+        <p>
+        Issues are identified too late, making it difficult to respond proactively or prevent impact.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+# ---------- SOLUTION ----------
 st.divider()
-
-# ---------- FEATURED PROJECTS ----------
-st.subheader("Featured projects")
-
-def project_card(title: str, desc: str, tags: list[str], repo_url: str | None = None, page_path: str | None = None):
-    chips = " ".join([f"<span>{t}</span>" for t in tags])
-
-    # Construir botones como "botones" estilizados, no hipervínculos azules
-    buttons_html = []
-    if page_path:
-        # Nota: para multipage de Streamlit, si 'page_path' es un archivo, considera pasar la URL final de la app al desplegar.
-        buttons_html.append(f"<a class='btn' href='{page_path}'>Open app</a>")
-    if repo_url:
-        buttons_html.append(f"<a class='btn ghost' href='{repo_url}' target='_blank' rel='noopener'>GitHub repo</a>")
-
-    st.markdown(
-        f"""
-        <div class='card'>
-          <h3>{title}</h3>
-          <p>{desc}</p>
-          <div class='chips'>{chips}</div>
-          <div class='actions'>
-            {' '.join(buttons_html)}
-          </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+# ---------- SOLUTION ----------
+st.markdown("""
+<div style="text-align:center; margin-top:3rem; margin-bottom:2rem;">
+    <h2 style="margin-bottom:0.5rem;">How I help teams make better decisions</h2>
+    <p style="color:#6B7280; font-size:1.05rem; max-width:600px; margin:auto;">
+        I design analytics solutions that bring clarity to data and support faster, more confident decision-making.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 
+col1, col2 = st.columns(2, gap="large")
 
-c1, c2 = st.columns(2)
-with c1:
-    project_card(
-        title="Save the bees 🐝",
-        desc="Interactive dashboard ",
-        tags=["Streamlit", "Data Visualization", "Plotly"],
-        repo_url="https://github.com/liliammtz",
-        page_path="Save_The_Bees",
-    )
+with col1:
+    st.markdown("""
+    <div class="card">
+        <h4>Transaction monitoring</h4>
+        <p>
+        Build dashboards to track transaction performance, identify anomalies, 
+        and understand behavior across segments.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
+with col2:
+    st.markdown("""
+    <div class="card">
+        <h4>Forecasting & planning</h4>
+        <p>
+        Develop forecasting models to anticipate trends, compare expected vs actuals, 
+        and support planning decisions.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+st.markdown("""
+<div class="card" style="margin-top:1rem;">
+    <h4>End-to-end analytics workflows</h4>
+    <p>
+    From data extraction and transformation to building production-ready dashboards, 
+    I create solutions that teams can actually use in their day-to-day operations.
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+# ---------- TOOLKITS ----------
 st.divider()
+st.markdown("""
+<div style="text-align:center; margin-top:2.5rem; margin-bottom:1.5rem;">
+    <h2 style="margin-bottom:0.4rem;">Analytics toolkits</h2>
+    <p style="color:#6B7280; font-size:1rem; max-width:600px; margin:auto;">
+        Modular tools designed to accelerate analysis, standardize workflows, 
+        and build scalable analytics solutions.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
-# ---------- CERTIFICATIONS ----------
-st.subheader("Certifications")
+c1, c2, c3 = st.columns(3)
+c1.page_link("pages/01_EDA_Toolkit.py", label="Data Exploration & Validation", icon="🔎")
+c2.page_link("pages/02_Forecasting.py", label="Forecasting & Time Series", icon="📈")
+c3.page_link("pages/02_ML_Toolkit.py", label="Machine Learning", icon="🧠")
+c1.page_link("pages/04_LLM_Toolkit.py", label="LLM Applications", icon="🤖")
+c2.page_link("pages/03_MLOps_Toolkit.py", label="MLOps & Deployment", icon="⚙️")
+c3.page_link("pages/05_Responsable_AI.py", label="AI Safety and Ethics", icon="🛡️")
+
+#!st.markdown("""Designed to be reusable, structured, and adaptable to different business cases.""")
+
+# ---------- CREDENTIALS ----------
+st.divider()
+st.header("Credentials")
 
 certs = {
     "Neo4j – Certified Professional":
@@ -300,17 +304,82 @@ certs = {
 for name, url in certs.items():
     st.markdown(f"- [{name}]({url})")
 
+# ---------- FAQ ----------
 st.divider()
 
+st.markdown("""
+<div style="text-align:center; margin-top:2rem; margin-bottom:1.5rem;">
+    <h2 style="margin-bottom:0.4rem;">Frequently asked questions</h2>
+    <p style="color:#6B7280; font-size:1rem;">
+        A bit more about how I work and what I bring to projects
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
-# ---------- CONTACT ----------
-st.subheader("Get in touch")
-col_a, col_b = st.columns([1,1])
-with col_a:
-    st.markdown("**Email**")
-    st.markdown("[liliammtzfdz@gmail.com](mailto:liliammtzfdz@gmail.com)")
-with col_b:
-    st.markdown("**LinkedIn**")
-    st.markdown("[https://www.linkedin.com/in/liliammtz/](https://www.linkedin.com/)")
 
-st.caption("© " + str(date.today().year) + " · Built with Streamlit")
+with st.expander("What kind of problems do you help solve?"):
+    st.write("""
+I work on analytics challenges related to transaction monitoring, forecasting, 
+and performance analysis. This includes identifying anomalies, understanding trends, 
+and helping teams make better data-driven decisions.
+""")
+
+
+with st.expander("What tools and technologies do you use?"):
+    st.write("""
+I primarily work with Python and SQL, using platforms like Snowflake and SQL Server 
+to manage and process data. 
+
+For building applications and dashboards, I use Streamlit, Plotly, Tableau, and Power BI, 
+and I’m comfortable working with Git-based workflows for development and deployment.
+""")
+
+
+with st.expander("Do you work with machine learning or forecasting models?"):
+    st.write("""
+Yes — I develop predictive models using tools like scikit-learn, StatsForecast, and Prophet. 
+These are typically used for forecasting trends, detecting anomalies, and supporting 
+business planning decisions.
+""")
+
+
+with st.expander("Do you work with large-scale or complex data systems?"):
+    st.write("""
+Yes — I have experience working with structured and semi-structured data using tools 
+like Snowflake, MongoDB, and Neo4j, as well as monitoring systems like ELK Stack and Splunk.
+""")
+
+
+with st.expander("What areas of data do you specialize in?"):
+    st.write("""
+My work focuses on data science, analytics, and business intelligence — particularly in 
+building solutions that connect data with real decision-making processes.
+""")
+
+
+with st.expander("Do you offer consulting or freelance work?"):
+    st.write("""
+Yes — I’m open to consulting and freelance opportunities. 
+I can help design dashboards, build forecasting models, or develop end-to-end analytics solutions.
+""")
+
+
+with st.expander("How can we work together?"):
+    st.write("""
+You can reach out via email or LinkedIn. I’m happy to discuss your use case and explore how I can help.
+""")
+    
+# ---------- CTA ----------
+st.divider()
+st.markdown('<a name="contact"></a>', unsafe_allow_html=True)
+
+col1, col2 = st.columns([2,1])
+
+with col1:
+    st.markdown("## Let’s work together")
+    st.write("I’m open to consulting, freelance, or full-time opportunities.")
+
+with col2:
+    st.markdown("""
+<a class="btn" href="mailto:liliammtzfdz@gmail.com">Contact me</a>
+""", unsafe_allow_html=True)
