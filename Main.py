@@ -277,6 +277,10 @@ st.divider()
 st.header("Credentials")
 
 certs = {
+    "Datacamp – Professional Data Scientist":
+        "https://www.datacamp.com/certificate/DS0021001397778",
+    "LangChain - LangChain for LLM Application Development":
+        "https://learn.deeplearning.ai/accomplishments/5811c7f5-1747-4fe9-9d8e-d92bd0bc47d2?usp=sharing",
     "Neo4j – Certified Professional":
         "https://graphacademy.neo4j.com/c/bf6ffa2d-eb5d-46ad-a4b5-426ba5fcd022/",
     "Snowflake – BUILD 2025 - 2026: Data Engineering Bootcamp":
