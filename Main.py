@@ -143,7 +143,7 @@ analyze trends, and support business decision-making through forecasting and dat
 """, unsafe_allow_html=True)
 
     st.markdown(f"""
-<a class="btn" href="https://www.linkedin.com/in/liliammtz/">Work with me</a>
+<a class="btn" href="https://www.linkedin.com/in/liliammtz/">Linkedin</a>
 <a class="btn secondary" href="https://github.com/liliammtz" target="_blank">GitHub</a>
 """, unsafe_allow_html=True)
 
@@ -382,5 +382,5 @@ with col1:
 
 with col2:
     st.markdown("""
-<a class="btn" href="mailto:liliammtzfdz@gmail.com">Contact me</a>
+<a class="btn" href="mailto:liliammtzfdz@gmail.com"> 📧 Contact me</a>
 """, unsafe_allow_html=True)
