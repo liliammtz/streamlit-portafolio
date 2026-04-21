@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(layout="wide")
+st.set_page_config(page_title="Liliam Martinez", page_icon="📊", layout="wide")
 
 # ---------- COLOR SYSTEM ----------
 PRIMARY = "#F4B740"        # amarillo (accent)
